@@ -1,0 +1,20 @@
+@import url('./__cover/profile__cover.css');
+@import url('./__avatar/profile__avatar.css');
+@import url('./__info/profile__info.css');
+@import url('./__position/profile__position.css');
+@import url('./__title/profile__title.css');
+@import url('./__subtitle/profile__subtitle.css');
+
+.profile {
+    font-family: 'Inter', Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 425px){
+    .profile {
+        flex-direction: column;
+    }
+}
