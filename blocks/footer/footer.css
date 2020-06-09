@@ -1,0 +1,9 @@
+@import url('./__copyright/footer__copyright.css');
+
+.footer {
+    font-family: 'Inter', Arial, sans-serif;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
