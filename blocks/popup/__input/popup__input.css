@@ -1,0 +1,30 @@
+.popup__input {
+    min-height: 27.3px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.21;
+    color: #000000;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+}
+
+.popup__input::-webkit-input-placeholder {
+    color: #000000;
+}
+
+.popup__input:-ms-input-placeholder {
+    color: #000000;
+}
+
+.popup__input::-moz-placeholder {
+    color: #000000;
+    opacity: 1;
+}
+
+.popup__input:-moz-placeholder {
+    color: #000000;
+    opacity: 1;
+}

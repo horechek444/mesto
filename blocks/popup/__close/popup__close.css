@@ -1,0 +1,28 @@
+.popup__close {
+    position: absolute;
+    cursor: pointer;
+}
+
+.popup__close::after,
+.popup__close::before {
+    position: absolute;
+    content: '';
+    width: 4.5px;
+    height: 40.7px;
+    background-color: #ffffff;
+    top: -70px;
+    left: 410px;
+}
+
+.popup__close::after {
+    transform: rotate(45deg);
+}
+
+.popup__close::before {
+    transform: rotate(-45deg);
+}
+
+.popup__close:hover::after,
+.popup__close:hover::before {
+    background-color: rgba(255, 255, 255, 0.6);
+}
