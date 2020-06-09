@@ -1,0 +1,10 @@
+.pictures__like {
+    position: relative;
+    background-image: url('../../../images/hert.svg');
+    background-repeat: no-repeat;
+    min-width: 20.7px;
+    min-height: 18.1px;
+    top: 7px;
+    right: 0;
+    cursor: pointer;
+}
