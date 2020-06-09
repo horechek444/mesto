@@ -1,0 +1,44 @@
+.button__add {
+    position: relative;
+    min-width: 150px;
+    min-height: 50px;
+    border: 2px solid #ffffff;
+    border-radius: 2px;
+}
+
+.button__add::after,
+.button__add::before {
+    position: absolute;
+    content: '';
+    width: 2px;
+    height: 22px;
+    background-color: #ffffff;
+    top: 12px;
+    left: 50%;
+}
+
+.button__add::after {
+    transform: rotate(-90deg);
+}
+
+.button__add:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.button__add:hover::after,
+.button__add:hover::before {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+@media screen and (max-width: 425px){
+    .button__add {
+        width: 88%;
+        height: 100%;
+    }
+
+    .button__add::after,
+    .button__add::before {
+        height: 16px;
+        top: 15px;
+    }
+}

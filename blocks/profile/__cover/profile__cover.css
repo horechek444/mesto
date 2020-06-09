@@ -1,0 +1,16 @@
+.profile__cover {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 486px;
+}
+
+@media screen and (max-width: 425px){
+    .profile__cover {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-width: 282px;
+        min-height: 200px;
+    }
+}
