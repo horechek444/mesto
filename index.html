@@ -92,12 +92,16 @@
             <span class="footer__copyright">&copy; 2020 Mesto Russia</span>
         </footer>
 
-        <section class="modal">
-            <div class="modal__close"></div>
-            <h2 class="modal__title">Редактировать профиль</h2>
-            <input class="modal__name" type="text">
-            <input class="modal__about" type="text">
-            <input class="button modal__submit" type="submit">
+        <section class="popup">
+            <div class="popup__container">
+                <div class="popup__close"></div>
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <div class="popup__cover">
+                    <input class="popup__input popup__input_value_name" type="text" placeholder="Жак-Ив Кусто">
+                    <input class="popup__input popup__input_value_about" type="text" placeholder="Исследователь океана">
+                </div>
+                <input class="button popup__submit" type="submit" value="Сохранить">
+            </div>
         </section>
     </div>
 </body>
