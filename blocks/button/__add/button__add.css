@@ -4,6 +4,7 @@
     min-height: 50px;
     border: 2px solid #ffffff;
     border-radius: 2px;
+    background-color: #000000;
 }
 
 .button__add::after,
@@ -22,17 +23,12 @@
 }
 
 .button__add:hover {
-    border-color: rgba(255, 255, 255, 0.6);
+    opacity: 0.6;
 }
 
-.button__add:hover::after,
-.button__add:hover::before {
-    background-color: rgba(255, 255, 255, 0.6);
-}
-
-@media screen and (max-width: 425px){
+@media screen and (max-width: 700px){
     .button__add {
-        width: 88%;
+        width: 80%;
         height: 100%;
     }
 
@@ -40,5 +36,11 @@
     .button__add::before {
         height: 16px;
         top: 15px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    .button__add {
+        width: 88%;
     }
 }

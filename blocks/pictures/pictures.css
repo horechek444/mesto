@@ -11,7 +11,13 @@
     color: #000000;
 }
 
-@media screen and (max-width: 425px){
+@media screen and (max-width: 930px){
+    .pictures {
+        padding: 50px 19px 0;
+    }
+}
+
+@media screen and (max-width: 700px){
     .pictures {
         padding: 36px 19px 0;
     }

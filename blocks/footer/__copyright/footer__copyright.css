@@ -5,9 +5,15 @@
     color: #545454;
 }
 
+@media screen and (max-width: 700px){
+    .footer__copyright {
+        font-size: 16px;
+        line-height: 1.21;
+    }
+}
+
 @media screen and (max-width: 425px){
     .footer__copyright {
         font-size: 14px;
-        line-height: 1.21;
     }
 }

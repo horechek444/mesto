@@ -10,6 +10,12 @@
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
 }
 
+@media screen and (max-width: 680px){
+    .header {
+        min-height: 65px;
+    }
+}
+
 @media screen and (max-width: 425px){
     .header {
         min-height: 56px;
