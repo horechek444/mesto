@@ -22,7 +22,6 @@
     transform: rotate(-45deg);
 }
 
-.popup__close:hover::after,
-.popup__close:hover::before {
-    background-color: rgba(255, 255, 255, 0.6);
+.popup__close:hover {
+    opacity: 0.6;
 }

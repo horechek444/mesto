@@ -1,13 +1,19 @@
 .profile__position {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
     align-items: baseline;
     min-width: 336px;
 }
 
+@media screen and (max-width: 700px){
+    .profile__position {
+        justify-content: center;
+        min-width: 425px;
+    }
+}
+
 @media screen and (max-width: 425px){
     .profile__position {
-        margin-top: 12px;
-        min-width: 218px;
+        min-width: 282px;
     }
 }

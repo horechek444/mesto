@@ -3,7 +3,7 @@
     margin: 0 auto;
 }
 
-@media screen and (max-width: 425px){
+@media screen and (max-width: 920px){
     .page__header {
         padding: 0 28.6px;
     }
