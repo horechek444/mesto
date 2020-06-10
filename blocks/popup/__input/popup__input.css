@@ -8,23 +8,5 @@
     line-height: 1.21;
     color: #000000;
     box-sizing: border-box;
-    padding-bottom: 10px;
-}
-
-.popup__input::-webkit-input-placeholder {
-    color: #000000;
-}
-
-.popup__input:-ms-input-placeholder {
-    color: #000000;
-}
-
-.popup__input::-moz-placeholder {
-    color: #000000;
-    opacity: 1;
-}
-
-.popup__input:-moz-placeholder {
-    color: #000000;
-    opacity: 1;
+    padding: 5px 0 10px;
 }
