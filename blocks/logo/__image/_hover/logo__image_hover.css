@@ -1,7 +1,0 @@
-.logo__image_hover {
-
-}
-
-.logo__image:hover .logo__image_hover {
-    fill: rgba(255, 255, 255, 0.6);
-}
