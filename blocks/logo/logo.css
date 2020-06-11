@@ -4,3 +4,7 @@
 .logo {
 
 }
+
+.logo:hover {
+    opacity: 0.6;
+}
