@@ -1,7 +1,6 @@
 @import url('./__logo/header__logo.css');
 
 .header {
-    font-family: 'Inter', Arial, sans-serif;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
