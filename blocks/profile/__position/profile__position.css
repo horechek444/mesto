@@ -1,7 +1,7 @@
 .profile__position {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: center;
     min-width: 336px;
 }
 
