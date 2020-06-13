@@ -1,12 +1,12 @@
-const editButton = document.querySelector('.profile__button');
-const popupWindow = document.querySelector('.popup');
-const popupClose = popupWindow.querySelector('.popup__close');
-const formElement = popupWindow.querySelector('.popup__form');
-const popupSubmit = formElement.querySelector('.popup__submit');
-const nameInput = formElement.querySelector('.popup__input_type_name');
-const jobInput = formElement.querySelector('.popup__input_type_about');
-const nameElement = document.querySelector('.profile__title');
-const jobElement = document.querySelector('.profile__subtitle');
+let editButton = document.querySelector('.profile__button');
+let popupWindow = document.querySelector('.popup');
+let popupClose = popupWindow.querySelector('.popup__close');
+let formElement = popupWindow.querySelector('.popup__form');
+let popupSubmit = formElement.querySelector('.popup__submit');
+let nameInput = formElement.querySelector('.popup__input_type_name');
+let jobInput = formElement.querySelector('.popup__input_type_about');
+let nameElement = document.querySelector('.profile__title');
+let jobElement = document.querySelector('.profile__subtitle');
 
 function popupToggle() {
     
