@@ -5,6 +5,7 @@
     min-height: 18.1px;
     cursor: pointer;
     border: none;
+    background-color: #ffffff;
 }
 
 .pictures__like:hover {
