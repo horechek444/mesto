@@ -4,4 +4,9 @@
     min-width: 20.7px;
     min-height: 18.1px;
     cursor: pointer;
+    border: none;
+}
+
+.pictures__like:hover {
+    opacity: 0.6;
 }

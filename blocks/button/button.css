@@ -1,8 +1,9 @@
-@import url('./__edit/button__edit.css');
-@import url('./__add/button__add.css');
+@import url('./_edit/button_edit.css');
+@import url('./_add/button_add.css');
 
 .button {
     display: block;
     cursor: pointer;
     box-sizing: border-box;
+    box-shadow: none;
 }
