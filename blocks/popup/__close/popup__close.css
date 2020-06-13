@@ -1,6 +1,8 @@
 .popup__close {
     position: absolute;
     cursor: pointer;
+    border: none;
+    box-shadow: none;
 }
 
 .popup__close::after,
