@@ -5,3 +5,10 @@
     min-height: calc(27.3px * 2 + 29.7px);
     margin-bottom: 48px;
 }
+
+@media screen and (max-width: 450px){
+    .popup__cover {
+        min-height: calc(27.3px * 2 + 20px);
+        margin-bottom: 40px;
+    }
+}
