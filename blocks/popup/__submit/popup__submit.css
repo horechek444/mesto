@@ -15,3 +15,10 @@
 .popup__submit:hover {
     background-color: rgba(0, 0, 0, 0.8);
 }
+
+@media screen and (max-width: 450px){
+    .popup__submit {
+        min-height: 45px;
+        font-size: 14px;
+    }
+}

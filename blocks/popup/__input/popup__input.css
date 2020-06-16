@@ -10,3 +10,9 @@
     box-sizing: border-box;
     padding: 5px 0 10px;
 }
+
+@media screen and (max-width: 450px){
+    .popup__input {
+        font-size: 12px;
+    }
+}
