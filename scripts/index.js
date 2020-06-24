@@ -1,19 +1,27 @@
 let editButton = document.querySelector('.profile__button');
-let popupWindow = document.querySelector('.popup');
-let popupClose = popupWindow.querySelector('.popup__close');
-let formElement = popupWindow.querySelector('.popup__form');
+let popupEdit = document.querySelector('.popup_edit');
+let popupClose = popupEdit.querySelector('.popup__close');
+let formElement = popupEdit.querySelector('.popup__form');
 let popupSubmit = formElement.querySelector('.popup__submit');
 let nameInput = formElement.querySelector('.popup__input_type_name');
 let jobInput = formElement.querySelector('.popup__input_type_about');
 let nameElement = document.querySelector('.profile__title');
 let jobElement = document.querySelector('.profile__subtitle');
 
+// let addButton = document.querySelector('.button__add');
+// let popupNewPlace = document.querySelector('.popup_new-place');
+// let popupNewClose = popupNewPlace.querySelector('.popup__close');
+// let formAddPopup = popupNewPlace.querySelector('.popup__form');
+// let popupSubmit = formAddPopup.querySelector('.popup__submit');
+// let titleInput = formAddPopup.querySelector('.popup__input_type_title');
+// let imageLinkInput = formAddPopup.querySelector('.popup__input_type_link');
+
+
 function popupToggle() {
-    
-    if (popupWindow.classList.contains('popup_opened')) {
-        popupWindow.classList.remove('popup_opened');
+    if (popupEdit.classList.contains('popup_opened')) {
+        popupEdit.classList.remove('popup_opened');
     } else {
-        popupWindow.classList.add('popup_opened');
+        popupEdit.classList.add('popup_opened');
 
         nameInput.value = nameElement.textContent;
         jobInput.value = jobElement.textContent;
@@ -30,4 +38,4 @@ function formSubmitHandler(event) {
 
 editButton.addEventListener('click', popupToggle);
 popupClose.addEventListener('click', popupToggle);
-formElement.addEventListener('submit', formSubmitHandler);
+formElement.addEventListener('submit', formSubmitHandler)
