@@ -7,6 +7,8 @@
 @import url('./__input/_type/popup__input_type_name.css');
 @import url('./__input/_type/popup__input_type_about.css');
 @import url('./__submit/popup__submit.css');
+@import url('./_edit/popup_edit.css');
+@import url('./_new-place/popup_new-place.css');
 
 .popup {
     display: none;

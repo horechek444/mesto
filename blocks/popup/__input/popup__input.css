@@ -1,3 +1,8 @@
+@import url('./_type/popup__input_type_about.css');
+@import url('./_type/popup__input_type_name.css');
+@import url('./_type/popup__input_type_title.css');
+@import url('./_type/popup__input_type_link.css');
+
 .popup__input {
     min-height: 27.3px;
     border: none;
