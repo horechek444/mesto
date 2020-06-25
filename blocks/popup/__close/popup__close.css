@@ -11,6 +11,7 @@
     box-shadow: none;
     background-color: transparent;
     padding: 0;
+    transition: opacity 0.3s ease-in;
 }
 
 @media screen and (max-width: 450px){

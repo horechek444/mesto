@@ -7,4 +7,5 @@
     border: none;
     width: 18px;
     height: 19.3px;
+    transition: opacity 0.3s ease-in;
 }

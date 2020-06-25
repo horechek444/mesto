@@ -10,6 +10,7 @@
     background-color: #000000;
     border: none;
     border-radius: 2px;
+    transition: background-color 0.3s ease-in;
 }
 
 .popup__submit:hover {
