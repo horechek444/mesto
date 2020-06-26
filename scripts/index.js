@@ -14,10 +14,11 @@ const addClose = addPopup.querySelector('.add__close');
 const addForm = addPopup.querySelector('.add__form');
 const addSubmit = addForm.querySelector('.add__submit');
 const titleInput = addForm.querySelector('.popup__input_type_title');
-const imageLinkInput = addForm.querySelector('.popup__input_type_link');
+const linkInput = addForm.querySelector('.popup__input_type_link');
 
-const pictureTemplate = document.querySelector('#picture').content;
-const pictures = document.querySelector('.pictures__list');
+const picturesTemplateElement = document.querySelector('.pictures-template');
+const picturesListElement = document.querySelector('.pictures__list');
+
 
 // Открытие-закрытие попапов
 function popupToggle(popup) {
@@ -27,12 +28,26 @@ function popupToggle(popup) {
 }
 
 // Редактирование данных в попапе edit
-function formSubmitHandler(event) {
+function editFormSubmitHandler(event) {
     event.preventDefault(); 
     
     nameElement.textContent = nameInput.value;
     jobElement.textContent = jobInput.value;
     popupToggle(editPopup)();
+}
+
+// Добавление данных в попап add
+function addFormSubmitHandler(event) {
+    event.preventDefault();
+
+    const name = titleInput.value;
+    const link = linkInput.value;
+
+    titleInput.value = '';
+    linkInput.value = '';
+
+    addPicturesElement(name, link);
+    popupToggle(addPopup)();
 }
 
 editButton.addEventListener('click', function() {
@@ -43,13 +58,14 @@ editButton.addEventListener('click', function() {
 });
 
 editClose.addEventListener('click', popupToggle(editPopup));
-editForm.addEventListener('submit', formSubmitHandler);
+editForm.addEventListener('submit', editFormSubmitHandler);
 
 addButton.addEventListener('click', popupToggle(addPopup));
 addClose.addEventListener('click', popupToggle(addPopup));
+addForm.addEventListener('submit', addFormSubmitHandler);
 
 // Добавление первых 6 элементов на страницу
-const initialCards = [
+const initialPicturesElements = [
     {
         name: 'Калининград',
         link: './images/kaliningrad.jpg'
@@ -76,11 +92,27 @@ const initialCards = [
     }
 ];
 
-function elementMaker(item) {
-    const pictureElement = pictureTemplate.cloneNode(true);
-    pictureElement.querySelector('.pictures__image').src = item.link;
-    pictureElement.querySelector('.pictures__title').textContent = item.name;
-    pictures.append(pictureElement);
+function addPicturesElement(name, link) {
+    const picturesElement = picturesTemplateElement.content.cloneNode(true);
+
+    picturesElement.querySelector('.pictures__title').textContent = name;
+    picturesElement.querySelector('.pictures__image').src = link;
+
+    picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
+
+    picturesListElement.prepend(picturesElement);
 }
 
-initialCards.forEach(elementMaker);
+function deletePicturesElement(event) {
+    const picturesElement = event.target.closest('.pictures__item')
+    picturesElement.remove();
+}
+
+function likePicturesElement(event) {
+    const picturesElement = event.target.closest('.pictures__item')
+    picturesElement.remove();
+}
+
+initialPicturesElements.forEach(item => {
+    addPicturesElement(item.name, item.link);
+});
