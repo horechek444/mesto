@@ -1,6 +1,6 @@
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.edit');
-const editClose = editPopup.querySelector('.edit__close');
+const editPopupClose = editPopup.querySelector('.edit__close');
 const editForm = editPopup.querySelector('.edit__form');
 const editSubmit = editForm.querySelector('.edit__submit');
 const nameInput = editForm.querySelector('.popup__input_type_name');
@@ -10,24 +10,26 @@ const jobElement = document.querySelector('.profile__subtitle');
 
 const addButton = document.querySelector('.button_add');
 const addPopup = document.querySelector('.add');
-const addClose = addPopup.querySelector('.add__close');
+const addPopupClose = addPopup.querySelector('.add__close');
 const addForm = addPopup.querySelector('.add__form');
 const addSubmit = addForm.querySelector('.add__submit');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
+const picturePopup = document.querySelector('.picture');
+const picturePopupClose = picturePopup.querySelector('.picture__close');
+const picturePopupImage = picturePopup.querySelector('.popup__image');
+const picturePopupCaption = picturePopup.querySelector('.popup__caption');
+
 const picturesTemplateElement = document.querySelector('.pictures-template');
 const picturesListElement = document.querySelector('.pictures__list');
 
-
-// Открытие-закрытие попапов
 function popupToggle(popup) {
     return function () {
-        popup.classList.toggle('popup_opened')
+        popup.classList.toggle('popup_opened');
     } 
 }
 
-// Редактирование данных в попапе edit
 function editFormSubmitHandler(event) {
     event.preventDefault(); 
     
@@ -36,7 +38,6 @@ function editFormSubmitHandler(event) {
     popupToggle(editPopup)();
 }
 
-// Добавление данных в попап add
 function addFormSubmitHandler(event) {
     event.preventDefault();
 
@@ -57,14 +58,15 @@ editButton.addEventListener('click', function() {
     jobInput.value = jobElement.textContent;
 });
 
-editClose.addEventListener('click', popupToggle(editPopup));
+editPopupClose.addEventListener('click', popupToggle(editPopup));
 editForm.addEventListener('submit', editFormSubmitHandler);
 
 addButton.addEventListener('click', popupToggle(addPopup));
-addClose.addEventListener('click', popupToggle(addPopup));
+addPopupClose.addEventListener('click', popupToggle(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
 
-// Добавление первых 6 элементов на страницу
+picturePopupClose.addEventListener('click', popupToggle(picturePopup));
+
 const initialPicturesElements = [
     {
         name: 'Калининград',
@@ -97,22 +99,34 @@ function addPicturesElement(name, link) {
 
     picturesElement.querySelector('.pictures__title').textContent = name;
     picturesElement.querySelector('.pictures__image').src = link;
-
-    picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
+    addPicturesElementListeners(picturesElement);
 
     picturesListElement.prepend(picturesElement);
 }
 
+function addPicturesElementListeners(picturesElement) {
+    picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
+    picturesElement.querySelector('.pictures__like').addEventListener('click', likePicturesElement);
+    picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
+}
+
 function deletePicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__item')
+    const picturesElement = event.target.closest('.pictures__item');
     picturesElement.remove();
 }
 
 function likePicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__item')
-    picturesElement.remove();
+    event.target.classList.toggle('pictures__like_active');
 }
 
 initialPicturesElements.forEach(item => {
     addPicturesElement(item.name, item.link);
 });
+
+function showPopupPicturesElement(event) {
+    const picturesElement = event.target.closest('.pictures__item');
+
+    picturePopupCaption.textContent = picturesElement.querySelector('.pictures__title').textContent;
+    picturePopupImage.src = picturesElement.querySelector('.pictures__image').src;
+    picturePopup.classList.add('popup_opened');
+}
