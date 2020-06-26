@@ -32,54 +32,6 @@
                 
             <section class="pictures">
                 <ul class="pictures__list">
-                    <!-- <li class="pictures__item">
-                        <button class="button pictures__delete opacity" type="button"></button>
-                        <img class="pictures__image" src="./images/kaliningrad.jpg" alt="Калининград, двор-колодец">
-                        <div class="pictures__cover">
-                            <p class="pictures__title">Калининград</p>
-                            <button class="button pictures__like opacity" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="pictures__item">
-                        <button class="button pictures__delete opacity" type="button"></button>
-                        <img class="pictures__image" src="./images/sakha.jpg" alt="Саха, Якутия вид сверху">
-                        <div class="pictures__cover">
-                            <p class="pictures__title">Саха</p>
-                            <button class="button pictures__like opacity" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="pictures__item">
-                        <button class="button pictures__delete opacity" type="button"></button>
-                        <img class="pictures__image" src="./images/vladivostok.jpg" alt="Владивосток, море">
-                        <div class="pictures__cover">
-                            <p class="pictures__title">Владивосток</p>
-                            <button class="button pictures__like opacity" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="pictures__item">
-                        <button class="button pictures__delete opacity" type="button"></button>
-                        <img class="pictures__image" src="./images/kamchatka.jpg" alt="Камчатка, снег и лёд">
-                        <div class="pictures__cover">
-                            <p class="pictures__title">Камчатка</p>
-                            <button class="button pictures__like opacity" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="pictures__item">
-                        <button class="button pictures__delete opacity" type="button"></button>
-                        <img class="pictures__image" src="./images/siberia.jpg" alt="Сибирь, ледник">
-                        <div class="pictures__cover">
-                            <p class="pictures__title">Сибирь</p>
-                            <button class="button pictures__like opacity" type="button"></button>
-                        </div>
-                    </li>
-                    <li class="pictures__item">
-                        <button class="button pictures__delete opacity" type="button"></button>
-                        <img class="pictures__image" src="./images/klin.jpg" alt="Клин, старая церковь">
-                        <div class="pictures__cover">
-                            <p class="pictures__title">Клин</p>
-                            <button class="button pictures__like opacity" type="button"></button>
-                        </div>
-                    </li> -->
                 </ul>
             </section>
         </main>
@@ -93,8 +45,8 @@
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <form class="popup__form edit__form" action="#" name="redact">
                     <div class="popup__cover">
-                        <input class="popup__input popup__input_type_name" type="text" name="name" value="" required>
-                        <input class="popup__input popup__input_type_about" type="text" name="about" value="" required>
+                        <input class="popup__input popup__input_type_name" type="text" name="name" required>
+                        <input class="popup__input popup__input_type_about" type="text" name="about" required>
                     </div>
                     <input class="button popup__submit edit__submit" type="submit" value="Сохранить" name="submit">
                 </form>
@@ -107,8 +59,8 @@
                 <h2 class="popup__title">Новое место</h2>
                 <form class="popup__form add__form" action="#" name="new-place">
                     <div class="popup__cover">
-                        <input class="popup__input popup__input_type_title" type="text" name="title" value="" placeholder="Название">
-                        <input class="popup__input popup__input_type_link" type="text" name="image-link" value="" placeholder="Ссылка на картинку">
+                        <input class="popup__input popup__input_type_title" type="text" name="title" placeholder="Название" required>
+                        <input class="popup__input popup__input_type_link" type="text" name="image-link"placeholder="Ссылка на картинку" required>
                     </div>
                     <input class="button popup__submit add__submit" type="submit" value="Сохранить" name="submit">
                 </form>
@@ -119,14 +71,14 @@
             <div class="popup__container popup__container_type_picture">
                 <button class="button popup__close picture__close opacity" type="button"></button>
                 <figure class="popup__figure">
-                    <img class="popup__image" src="./images/kaliningrad.jpg" alt="">
-                    <figcaption class="popup__caption">Калининград</figcaption>
+                    <img class="popup__image">
+                    <figcaption class="popup__caption"></figcaption>
                 </figure>
             </div>
         </section>
     </div>
 
-    <template id="picture">
+    <template class="pictures-template">
         <li class="pictures__item">
             <button class="button pictures__delete opacity" type="button"></button>
             <img class="pictures__image">

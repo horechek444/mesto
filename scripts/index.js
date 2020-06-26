@@ -1,38 +1,54 @@
-let editButton = document.querySelector('.profile__button');
-let editPopup = document.querySelector('.edit');
-let editClose = editPopup.querySelector('.edit__close');
-let editForm = editPopup.querySelector('.edit__form');
-let editSubmit = editForm.querySelector('.edit__submit');
-let nameInput = editForm.querySelector('.popup__input_type_name');
-let jobInput = editForm.querySelector('.popup__input_type_about');
-let nameElement = document.querySelector('.profile__title');
-let jobElement = document.querySelector('.profile__subtitle');
+const editButton = document.querySelector('.profile__button');
+const editPopup = document.querySelector('.edit');
+const editPopupClose = editPopup.querySelector('.edit__close');
+const editForm = editPopup.querySelector('.edit__form');
+const editSubmit = editForm.querySelector('.edit__submit');
+const nameInput = editForm.querySelector('.popup__input_type_name');
+const jobInput = editForm.querySelector('.popup__input_type_about');
+const nameElement = document.querySelector('.profile__title');
+const jobElement = document.querySelector('.profile__subtitle');
 
-let addButton = document.querySelector('.button_add');
-let addPopup = document.querySelector('.add');
-let addClose = addPopup.querySelector('.add__close');
-let addForm = addPopup.querySelector('.add__form');
-let addSubmit = addForm.querySelector('.add__submit');
-let titleInput = addForm.querySelector('.popup__input_type_title');
-let imageLinkInput = addForm.querySelector('.popup__input_type_link');
+const addButton = document.querySelector('.button_add');
+const addPopup = document.querySelector('.add');
+const addPopupClose = addPopup.querySelector('.add__close');
+const addForm = addPopup.querySelector('.add__form');
+const addSubmit = addForm.querySelector('.add__submit');
+const titleInput = addForm.querySelector('.popup__input_type_title');
+const linkInput = addForm.querySelector('.popup__input_type_link');
 
-let pictureTemplate = document.querySelector('#picture').content;
-let pictures = document.querySelector('.pictures__list');
+const picturePopup = document.querySelector('.picture');
+const picturePopupClose = picturePopup.querySelector('.picture__close');
+const picturePopupImage = picturePopup.querySelector('.popup__image');
+const picturePopupCaption = picturePopup.querySelector('.popup__caption');
 
-// Открытие-закрытие попапов
+const picturesTemplateElement = document.querySelector('.pictures-template');
+const picturesListElement = document.querySelector('.pictures__list');
+
 function popupToggle(popup) {
     return function () {
-        popup.classList.toggle('popup_opened')
+        popup.classList.toggle('popup_opened');
     } 
 }
 
-// Редактирование данных в попапе edit
-function formSubmitHandler(event) {
+function editFormSubmitHandler(event) {
     event.preventDefault(); 
     
     nameElement.textContent = nameInput.value;
     jobElement.textContent = jobInput.value;
     popupToggle(editPopup)();
+}
+
+function addFormSubmitHandler(event) {
+    event.preventDefault();
+
+    const name = titleInput.value;
+    const link = linkInput.value;
+
+    titleInput.value = '';
+    linkInput.value = '';
+
+    addPicturesElement(name, link);
+    popupToggle(addPopup)();
 }
 
 editButton.addEventListener('click', function() {
@@ -42,25 +58,75 @@ editButton.addEventListener('click', function() {
     jobInput.value = jobElement.textContent;
 });
 
-editClose.addEventListener('click', popupToggle(editPopup));
-editForm.addEventListener('submit', formSubmitHandler);
+editPopupClose.addEventListener('click', popupToggle(editPopup));
+editForm.addEventListener('submit', editFormSubmitHandler);
 
 addButton.addEventListener('click', popupToggle(addPopup));
-addClose.addEventListener('click', popupToggle(addPopup));
+addPopupClose.addEventListener('click', popupToggle(addPopup));
+addForm.addEventListener('submit', addFormSubmitHandler);
 
-function elementMaker() {
-    let pictureElements = [];
-    for (let i = 0; i < 6; i++) {
-        pictureElements[i] = pictureTemplate.cloneNode(true);
-        
-    } return pictureElements;
+picturePopupClose.addEventListener('click', popupToggle(picturePopup));
+
+const initialPicturesElements = [
+    {
+        name: 'Калининград',
+        link: './images/kaliningrad.jpg'
+    },
+    {
+        name: 'Саха',
+        link: './images/sakha.jpg'
+    },
+    {
+        name: 'Владивосток',
+        link: './images/vladivostok.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: './images/kamchatka.jpg'
+    },
+    {
+        name: 'Сибирь',
+        link: './images/siberia.jpg'
+    },
+    {
+        name: 'Клин',
+        link: './images/klin.jpg'
+    }
+];
+
+function addPicturesElement(name, link) {
+    const picturesElement = picturesTemplateElement.content.cloneNode(true);
+
+    picturesElement.querySelector('.pictures__title').textContent = name;
+    picturesElement.querySelector('.pictures__image').src = link;
+    addPicturesElementListeners(picturesElement);
+
+    picturesListElement.prepend(picturesElement);
 }
-console.log(elementMaker());
 
-let pictureElement_1 = pictureTemplate.cloneNode(true);
+function addPicturesElementListeners(picturesElement) {
+    picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
+    picturesElement.querySelector('.pictures__like').addEventListener('click', likePicturesElement);
+    picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
+}
 
-pictureElement_1.querySelector('.pictures__image').src = './images/kaliningrad.jpg';
-pictureElement_1.querySelector('.pictures__image').alt = "Калининград, двор-колодец";
-pictureElement_1.querySelector('.pictures__title').textContent = 'Калининград';
+function deletePicturesElement(event) {
+    const picturesElement = event.target.closest('.pictures__item');
+    picturesElement.remove();
+}
 
-pictures.append(pictureElement_1);
+function likePicturesElement(event) {
+    event.target.classList.toggle('pictures__like_active');
+}
+
+initialPicturesElements.forEach(item => {
+    addPicturesElement(item.name, item.link);
+});
+
+function showPopupPicturesElement(event) {
+    const picturesElement = event.target.closest('.pictures__item');
+
+    picturePopupCaption.textContent = picturesElement.querySelector('.pictures__title').textContent;
+    picturePopupImage.src = picturesElement.querySelector('.pictures__image').src;
+    picturePopup.classList.add('popup_opened');
+}

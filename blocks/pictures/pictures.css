@@ -4,6 +4,7 @@
 @import url('./__cover/pictures__cover.css');
 @import url('./__title/pictures__title.css');
 @import url('./__like/pictures__like.css');
+@import url('./__like/_active/pictures__like_active.css');
 @import url('./__delete/pictures__delete.css');
 
 .pictures {
