@@ -99,6 +99,7 @@ function addPicturesElement(name, link) {
 
     picturesElement.querySelector('.pictures__title').textContent = name;
     picturesElement.querySelector('.pictures__image').src = link;
+    picturesElement.querySelector('.pictures__image').alt = name;
     addPicturesElementListeners(picturesElement);
 
     picturesListElement.prepend(picturesElement);
@@ -128,5 +129,6 @@ function showPopupPicturesElement(event) {
 
     picturePopupCaption.textContent = picturesElement.querySelector('.pictures__title').textContent;
     picturePopupImage.src = picturesElement.querySelector('.pictures__image').src;
+    picturePopupCaption.textContent = picturesElement.querySelector('.pictures__image').alt;
     picturePopup.classList.add('popup_opened');
 }
