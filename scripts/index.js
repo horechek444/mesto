@@ -49,7 +49,7 @@ const initialPicturesElements = [
     }
 ];
 
-function popupToggle(popup) {
+function togglePopup(popup) {
     popup.classList.toggle('popup_opened');
 }
 
@@ -58,7 +58,7 @@ function editFormSubmitHandler(event) {
     
     nameElement.textContent = nameInput.value;
     jobElement.textContent = jobInput.value;
-    popupToggle(editPopup);
+    togglePopup(editPopup);
 }
 
 function deletePicturesElement(event) {
@@ -75,7 +75,7 @@ function showPopupPicturesElement(event) {
 
     picturePopupImage.src = picturesElement.src;
     picturePopupCaption.textContent = picturesElement.alt;
-    popupToggle(picturePopup);
+    togglePopup(picturePopup);
 }
 
 function addPicturesElementListeners(picturesElement) {
@@ -110,24 +110,24 @@ function addFormSubmitHandler(event) {
 
     const element = createPicturesElement(name, link);
     renderPicturesElement(element);
-    popupToggle(addPopup);
+    togglePopup(addPopup);
 }
 
 editButton.addEventListener('click', function() {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
 
-    popupToggle(editPopup);
+    togglePopup(editPopup);
 });
 
-editPopupClose.addEventListener('click', () => popupToggle(editPopup));
+editPopupClose.addEventListener('click', () => togglePopup(editPopup));
 editForm.addEventListener('submit', editFormSubmitHandler);
 
-addButton.addEventListener('click', () => popupToggle(addPopup));
-addPopupClose.addEventListener('click', () => popupToggle(addPopup));
+addButton.addEventListener('click', () => togglePopup(addPopup));
+addPopupClose.addEventListener('click', () => togglePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
 
-picturePopupClose.addEventListener('click', () => popupToggle(picturePopup));
+picturePopupClose.addEventListener('click', () => togglePopup(picturePopup));
 
 initialPicturesElements.forEach(item => {
     const element = createPicturesElement(item.name, item.link);
