@@ -71,11 +71,10 @@ function likePicturesElement(event) {
 }
 
 function showPopupPicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__item');
+    const picturesElement = event.target.closest('.pictures__image');
 
-    picturePopupCaption.textContent = picturesElement.querySelector('.pictures__title').textContent;
-    picturePopupImage.src = picturesElement.querySelector('.pictures__image').src;
-    picturePopupCaption.textContent = picturesElement.querySelector('.pictures__image').alt;
+    picturePopupImage.src = picturesElement.src;
+    picturePopupCaption.textContent = picturesElement.alt;
     popupToggle(picturePopup);
 }
 
@@ -85,7 +84,7 @@ function addPicturesElementListeners(picturesElement) {
     picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
 }
 
-function addPicturesElement(name, link) {
+function createPicturesElement(name, link) {
     const picturesElement = picturesTemplateElement.content.cloneNode(true);
 
     picturesElement.querySelector('.pictures__title').textContent = name;
@@ -93,7 +92,11 @@ function addPicturesElement(name, link) {
     picturesElement.querySelector('.pictures__image').alt = name;
     addPicturesElementListeners(picturesElement);
 
-    picturesListElement.prepend(picturesElement);
+    return picturesElement;
+}
+
+function renderPicturesElement(element) {
+    picturesListElement.prepend(element);
 }
 
 function addFormSubmitHandler(event) {
@@ -105,7 +108,8 @@ function addFormSubmitHandler(event) {
     titleInput.value = '';
     linkInput.value = '';
 
-    addPicturesElement(name, link);
+    const element = createPicturesElement(name, link);
+    renderPicturesElement(element);
     popupToggle(addPopup);
 }
 
@@ -126,5 +130,6 @@ addForm.addEventListener('submit', addFormSubmitHandler);
 picturePopupClose.addEventListener('click', () => popupToggle(picturePopup));
 
 initialPicturesElements.forEach(item => {
-    addPicturesElement(item.name, item.link);
+    const element = createPicturesElement(item.name, item.link);
+    renderPicturesElement(element);
 });
