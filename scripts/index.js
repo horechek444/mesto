@@ -113,7 +113,7 @@ function addFormSubmitHandler(event) {
     togglePopup(addPopup);
 }
 
-editButton.addEventListener('click', function() {
+editButton.addEventListener('click', () => {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
 
