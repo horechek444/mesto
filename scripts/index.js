@@ -1,20 +1,20 @@
 const editButton = document.querySelector('.profile__button');
-const editPopup = document.querySelector('.edit');
+const editPopup = document.querySelector('.popup_type_edit');
 const editPopupClose = editPopup.querySelector('.popup__close');
-const editForm = editPopup.querySelector('.edit__form');
+const editForm = editPopup.querySelector('.popup__form');
 const nameInput = editForm.querySelector('.popup__input_type_name');
 const jobInput = editForm.querySelector('.popup__input_type_about');
 const nameElement = document.querySelector('.profile__title');
 const jobElement = document.querySelector('.profile__subtitle');
 
 const addButton = document.querySelector('.button_add');
-const addPopup = document.querySelector('.add');
+const addPopup = document.querySelector('.popup_type_add');
 const addPopupClose = addPopup.querySelector('.popup__close');
-const addForm = addPopup.querySelector('.add__form');
+const addForm = addPopup.querySelector('.popup__form');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
-const picturePopup = document.querySelector('.picture');
+const picturePopup = document.querySelector('.popup_type_picture');
 const picturePopupClose = picturePopup.querySelector('.popup__close');
 const picturePopupImage = picturePopup.querySelector('.popup__image');
 const picturePopupCaption = picturePopup.querySelector('.popup__caption');
@@ -123,7 +123,11 @@ editButton.addEventListener('click', () => {
 editPopupClose.addEventListener('click', () => togglePopup(editPopup));
 editForm.addEventListener('submit', editFormSubmitHandler);
 
-addButton.addEventListener('click', () => togglePopup(addPopup));
+addButton.addEventListener('click', () => {
+    addForm.reset();
+    togglePopup(addPopup);
+});
+
 addPopupClose.addEventListener('click', () => togglePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
 

@@ -39,35 +39,35 @@
             <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
         </footer>
 
-        <section class="popup edit">
+        <section class="popup popup_type_edit">
             <div class="popup__container">
                 <button class="button popup__close opacity" type="button"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <form class="popup__form edit__form" action="#" name="redact">
+                <form class="popup__form" action="#" name="redact">
                     <div class="popup__cover">
                         <input class="popup__input popup__input_type_name" type="text" name="name" required>
                         <input class="popup__input popup__input_type_about" type="text" name="about" required>
                     </div>
-                    <input class="button popup__submit edit__submit" type="submit" value="Сохранить" name="submit">
+                    <input class="button popup__submit" type="submit" value="Сохранить" name="submit">
                 </form>
             </div>
         </section>
 
-        <section class="popup add">
+        <section class="popup popup_type_add">
             <div class="popup__container">
                 <button class="button popup__close opacity" type="button"></button>
                 <h2 class="popup__title">Новое место</h2>
-                <form class="popup__form add__form" action="#" name="new-place">
+                <form class="popup__form" action="#" name="new-place">
                     <div class="popup__cover">
                         <input class="popup__input popup__input_type_title" type="text" name="title" placeholder="Название" required>
                         <input class="popup__input popup__input_type_link" type="text" name="image-link" placeholder="Ссылка на картинку" required>
                     </div>
-                    <input class="button popup__submit add__submit" type="submit" value="Сохранить" name="submit">
+                    <input class="button popup__submit" type="submit" value="Сохранить" name="submit">
                 </form>
             </div>
         </section>
 
-        <section class="popup popup_type_picture picture">
+        <section class="popup popup_type_picture">
             <div class="popup__container popup__container_type_picture">
                 <button class="button popup__close opacity" type="button"></button>
                 <figure class="popup__figure">

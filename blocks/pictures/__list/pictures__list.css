@@ -1,7 +1,7 @@
 .pictures__list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-    grid-auto-rows: minmax(361px, 25%);
+    grid-auto-rows: minmax(361px, 0.3fr);
     grid-gap: 21px 18px;
     list-style: none;
     margin: 0;
@@ -11,6 +11,6 @@
 @media screen and (max-width: 425px){
     .pictures__list {
         grid-gap: 20px;
-        grid-auto-rows: minmax(361px, 10%);
+        grid-auto-rows: minmax(361px, 0.1fr);
     }
 }
