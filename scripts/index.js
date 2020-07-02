@@ -1,6 +1,6 @@
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.edit');
-const editPopupClose = editPopup.querySelector('.edit__close');
+const editPopupClose = editPopup.querySelector('.popup__close');
 const editForm = editPopup.querySelector('.edit__form');
 const nameInput = editForm.querySelector('.popup__input_type_name');
 const jobInput = editForm.querySelector('.popup__input_type_about');
@@ -9,13 +9,13 @@ const jobElement = document.querySelector('.profile__subtitle');
 
 const addButton = document.querySelector('.button_add');
 const addPopup = document.querySelector('.add');
-const addPopupClose = addPopup.querySelector('.add__close');
+const addPopupClose = addPopup.querySelector('.popup__close');
 const addForm = addPopup.querySelector('.add__form');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
 const picturePopup = document.querySelector('.picture');
-const picturePopupClose = picturePopup.querySelector('.picture__close');
+const picturePopupClose = picturePopup.querySelector('.popup__close');
 const picturePopupImage = picturePopup.querySelector('.popup__image');
 const picturePopupCaption = picturePopup.querySelector('.popup__caption');
 
