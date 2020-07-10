@@ -6,13 +6,17 @@
 @import url('./__input/popup__input.css');
 @import url('./__input/_type/popup__input_type_name.css');
 @import url('./__input/_type/popup__input_type_about.css');
+@import url('./__input/_type/popup__input_type_link.css');
+@import url('./__input/_type/popup__input_type_title.css');
 @import url('./__submit/popup__submit.css');
+@import url('./__submit/_type/popup__submit_type_disabled.css');
 @import url('./__figure/popup__figure.css');
 @import url('./__image/popup__image.css');
 @import url('./__caption/popup__caption.css');
 @import url('./__container/_type/popup__container_type_picture.css');
-@import url('./_type/popup_type_edit.css');
-@import url('./_type/popupo_type_add.css');
+@import url('./__input/_type/popup__input_type_error.css');
+@import url('./__error/popup__error.css');
+@import url('./__control/popup__control.css');
 
 .popup {
     display: flex;
