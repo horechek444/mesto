@@ -1,5 +1,5 @@
 const showInputError = (inputElement, errorMessage, validationParams) => {
-    const errorElement = inputElement.closest('.popup__control').querySelector('.popup__error');
+    const errorElement = inputElement.closest(validationParams.controlSelectorClass).querySelector(validationParams.errorClass);
 
     inputElement.classList.add(validationParams.inputErrorClass);
     errorElement.textContent = errorMessage;
@@ -7,7 +7,7 @@ const showInputError = (inputElement, errorMessage, validationParams) => {
 };
 
 const hideInputError = (inputElement, validationParams) => {
-    const errorElement = inputElement.closest('.popup__control').querySelector('.popup__error');
+    const errorElement = inputElement.closest(validationParams.controlSelectorClass).querySelector(validationParams.errorClass);
 
     inputElement.classList.remove(validationParams.inputErrorClass);
     errorElement.classList.remove(validationParams.errorShowClass);
@@ -82,4 +82,6 @@ enableValidation({
     inactiveButtonClass: 'popup__submit_type_disabled',
     inputErrorClass: 'popup__input_type_error',
     errorShowClass: 'popup__error_type_active',
+    controlSelectorClass: '.popup__control',
+    errorClass: '.popup__error'
 });
