@@ -1,3 +1,5 @@
+const popupList = document.querySelectorAll('.popup');
+
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
 const editPopupClose = editPopup.querySelector('.popup__close');
@@ -113,15 +115,36 @@ function addFormSubmitHandler(event) {
     togglePopup(addPopup);
 }
 
+function closePopupByOverlay(event, popup) {
+    if (event.target !== event.currentTarget) { 
+        return
+    }
+    togglePopup(popup);
+}
+
+function closePopupByEsc(event) {
+    if (event.keyCode === 27) { 
+        const popupArray = Array.from(popupList);
+        popupArray.forEach((popupElement) => {
+            popupElement.classList.remove('popup_opened');
+        });
+    }
+}
+
 editButton.addEventListener('click', () => {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
+
+    nameInput.dispatchEvent(new Event('input'));
+    jobInput.dispatchEvent(new Event('input'));
 
     togglePopup(editPopup);
 });
 
 editPopupClose.addEventListener('click', () => togglePopup(editPopup));
 editForm.addEventListener('submit', editFormSubmitHandler);
+editPopup.addEventListener('click', () => closePopupByOverlay(event, editPopup));
+document.addEventListener('keydown', closePopupByEsc);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
@@ -130,8 +153,10 @@ addButton.addEventListener('click', () => {
 
 addPopupClose.addEventListener('click', () => togglePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
+addPopup.addEventListener('click', () => closePopupByOverlay(addPopup));
 
 picturePopupClose.addEventListener('click', () => togglePopup(picturePopup));
+picturePopup.addEventListener('click', () => closePopupByOverlay(event, picturePopup));
 
 initialPicturesElements.forEach(item => {
     const element = createPicturesElement(item.name, item.link);
