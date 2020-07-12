@@ -153,7 +153,7 @@ addButton.addEventListener('click', () => {
 
 addPopupClose.addEventListener('click', () => togglePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
-addPopup.addEventListener('click', () => closePopupByOverlay(addPopup));
+addPopup.addEventListener('click', () => closePopupByOverlay(event, addPopup));
 
 picturePopupClose.addEventListener('click', () => togglePopup(picturePopup));
 picturePopup.addEventListener('click', () => closePopupByOverlay(event, picturePopup));
