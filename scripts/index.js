@@ -117,6 +117,9 @@ editButton.addEventListener('click', () => {
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
 
+    nameInput.dispatchEvent(new Event('input'));
+    jobInput.dispatchEvent(new Event('input'));
+
     togglePopup(editPopup);
 });
 
