@@ -126,15 +126,16 @@ function addFormSubmitHandler(event) {
 
 function closePopupByOverlay(event) {
     const currentPopup = document.querySelector('.popup_opened');
-    if (event.target === event.currentTarget) { 
+    if (currentPopup && event.target === event.currentTarget) { 
         togglePopup(currentPopup);
     }
 }
 
 function closePopupByEsc(event) {
     const currentPopup = document.querySelector('.popup_opened');
-    if (event.key === 'Escape') { 
+    if (currentPopup && event.key === 'Escape') { 
         togglePopup(currentPopup);
+        document.removeEventListener('keydown', closePopupByEsc);
     }
 }
 
