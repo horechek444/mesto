@@ -1,5 +1,3 @@
-const popupList = document.querySelectorAll('.popup');
-
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
 const editPopupClose = editPopup.querySelector('.popup__close');
@@ -50,6 +48,17 @@ const initialPicturesElements = [
         link: './images/klin.jpg'
     }
 ];
+
+const validationParams = {
+    formElement: '.popup__form',
+    inputElement: '.popup__input',
+    buttonElement: '.popup__submit',    
+    inactiveButtonClass: 'popup__submit_type_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorShowClass: 'popup__error_type_active',
+    controlSelectorClass: '.popup__control',
+    errorClass: '.popup__error'
+};
 
 function togglePopup(popup) {
     popup.classList.toggle('popup_opened');
@@ -115,23 +124,30 @@ function addFormSubmitHandler(event) {
     togglePopup(addPopup);
 }
 
-function closePopupByOverlay(event, popup) {
-    if (event.target !== event.currentTarget) { 
-        return
+function closePopupByOverlay(event) {
+    const currentPopup = document.querySelector('.popup_opened');
+    if (event.target === event.currentTarget) { 
+        togglePopup(currentPopup);
     }
-    togglePopup(popup);
 }
 
 function closePopupByEsc(event) {
-    if (event.keyCode === 27) { 
-        const popupArray = Array.from(popupList);
-        popupArray.forEach((popupElement) => {
-            popupElement.classList.remove('popup_opened');
-        });
+    const currentPopup = document.querySelector('.popup_opened');
+    if (event.key === 'Escape') { 
+        togglePopup(currentPopup);
     }
 }
 
+function popupErrorUpdate(form) {
+    const inputsArray = Array.from(form.querySelectorAll('.popup__input'));
+    inputsArray.forEach((inputElement) => {
+        hideInputError(inputElement, validationParams);
+    });
+}
+
 editButton.addEventListener('click', () => {
+    popupErrorUpdate(editForm);
+
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
 
@@ -143,22 +159,25 @@ editButton.addEventListener('click', () => {
 
 editPopupClose.addEventListener('click', () => togglePopup(editPopup));
 editForm.addEventListener('submit', editFormSubmitHandler);
-editPopup.addEventListener('click', () => closePopupByOverlay(event, editPopup));
+editPopup.addEventListener('mousedown', closePopupByOverlay);
 document.addEventListener('keydown', closePopupByEsc);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
+    popupErrorUpdate(addForm);
     togglePopup(addPopup);
 });
 
 addPopupClose.addEventListener('click', () => togglePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
-addPopup.addEventListener('click', () => closePopupByOverlay(event, addPopup));
+addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 picturePopupClose.addEventListener('click', () => togglePopup(picturePopup));
-picturePopup.addEventListener('click', () => closePopupByOverlay(event, picturePopup));
+picturePopup.addEventListener('mousedown', closePopupByOverlay);
 
 initialPicturesElements.forEach(item => {
     const element = createPicturesElement(item.name, item.link);
     renderPicturesElement(element);
 });
+
+enableValidation(validationParams);
