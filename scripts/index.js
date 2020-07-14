@@ -108,17 +108,6 @@ function addPicturesElementListeners(picturesElement) {
     picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
 }
 
-// function createPicturesElement(name, link) {
-//     const picturesElement = picturesTemplateElement.content.cloneNode(true);
-
-//     picturesElement.querySelector('.pictures__title').textContent = name;
-//     picturesElement.querySelector('.pictures__image').src = link;
-//     picturesElement.querySelector('.pictures__image').alt = name;
-//     addPicturesElementListeners(picturesElement);
-
-//     return picturesElement;
-// }
-
 function createPicturesElement(newElement) {
     const picturesElement = picturesTemplateElement.content.cloneNode(true);
 
@@ -133,20 +122,6 @@ function createPicturesElement(newElement) {
 function renderPicturesElement(element) {
     picturesListElement.prepend(element);
 }
-
-// function addFormSubmitHandler(event) {
-//     event.preventDefault();
-
-//     const name = titleInput.value;
-//     const link = linkInput.value;
-
-//     titleInput.value = '';
-//     linkInput.value = '';
-
-//     const element = createPicturesElement(name, link);
-//     renderPicturesElement(element);
-//     togglePopup(addPopup);
-// }
 
 function addFormSubmitHandler(event) {
     event.preventDefault();
@@ -203,11 +178,6 @@ addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 picturePopupClose.addEventListener('click', () => togglePopup(picturePopup));
 picturePopup.addEventListener('mousedown', closePopupByOverlay);
-
-// initialPicturesElements.forEach(item => {
-//     const element = createPicturesElement(item.name, item.link);
-//     renderPicturesElement(element);
-// });
 
 initialPicturesElements.forEach(item => {
     const element = createPicturesElement(item);

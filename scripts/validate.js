@@ -13,7 +13,7 @@ const hideInputError = (inputElement, validationParams) => {
     errorElement.textContent = '';
 };
 
-const isValid = (inputElement, validationParams) => {
+const checkInputValidity = (inputElement, validationParams) => {
     if(!inputElement.validity.valid) {
         showInputError(inputElement, inputElement.validationMessage, validationParams);
     } else {
@@ -43,7 +43,7 @@ const setEventListeners = (formElement, validationParams) => {
     
     inputList.forEach((inputElement) => { 
         inputElement.addEventListener('input', () => { 
-            isValid(inputElement, validationParams); 
+            checkInputValidity(inputElement, validationParams); 
             toggleButtonState(inputList, buttonElement, validationParams);
         });
     });
