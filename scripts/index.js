@@ -22,33 +22,6 @@ const picturePopupCaption = picturePopup.querySelector('.popup__caption');
 const picturesTemplateElement = document.querySelector('.pictures-template');
 const picturesListElement = document.querySelector('.pictures__list');
 
-const initialPicturesElements = [
-    {
-        name: 'Калининград',
-        link: './images/kaliningrad.jpg'
-    },
-    {
-        name: 'Саха',
-        link: './images/sakha.jpg'
-    },
-    {
-        name: 'Владивосток',
-        link: './images/vladivostok.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: './images/kamchatka.jpg'
-    },
-    {
-        name: 'Сибирь',
-        link: './images/siberia.jpg'
-    },
-    {
-        name: 'Клин',
-        link: './images/klin.jpg'
-    }
-];
-
 const validationParams = {
     formElement: '.popup__form',
     inputElement: '.popup__input',
@@ -60,21 +33,14 @@ const validationParams = {
     errorClass: '.popup__error'
 };
 
-function closePopupByEsc(event) {
-    const currentPopup = document.querySelector('.popup_opened');
-    if (currentPopup && event.key === 'Escape') { 
-        currentPopup.classList.remove('popup_opened');
-    }
+function openPopup(popup) {
+    popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupByEsc);
 }
 
-function togglePopup(popup) {
-    popup.classList.toggle('popup_opened');
-
-    if (popup.classList.contains('popup_opened')) {
-        document.addEventListener('keydown', closePopupByEsc);
-    } else {
-        document.removeEventListener('keydown', closePopupByEsc);
-    }
+function closePopup(popup) {
+    popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupByEsc);
 }
 
 function editFormSubmitHandler(event) {
@@ -82,7 +48,7 @@ function editFormSubmitHandler(event) {
     
     nameElement.textContent = nameInput.value;
     jobElement.textContent = jobInput.value;
-    togglePopup(editPopup);
+    closePopup(editPopup);
 }
 
 function deletePicturesElement(event) {
@@ -99,7 +65,7 @@ function showPopupPicturesElement(event) {
 
     picturePopupImage.src = picturesElement.src;
     picturePopupCaption.textContent = picturesElement.alt;
-    togglePopup(picturePopup);
+    openPopup(picturePopup); 
 }
 
 function addPicturesElementListeners(picturesElement) {
@@ -110,10 +76,11 @@ function addPicturesElementListeners(picturesElement) {
 
 function createPicturesElement(newElement) {
     const picturesElement = picturesTemplateElement.content.cloneNode(true);
+    const picturesImage = picturesElement.querySelector('.pictures__image');
 
     picturesElement.querySelector('.pictures__title').textContent = newElement.name;
-    picturesElement.querySelector('.pictures__image').src = newElement.link;
-    picturesElement.querySelector('.pictures__image').alt = newElement.name;
+    picturesImage.src = newElement.link;
+    picturesImage.alt = newElement.name;
     addPicturesElementListeners(picturesElement);
 
     return picturesElement;
@@ -133,21 +100,21 @@ function addFormSubmitHandler(event) {
 
     const element = createPicturesElement(newElement);
     renderPicturesElement(element);
-    togglePopup(addPopup);
+    closePopup(addPopup); 
 }
 
 function closePopupByOverlay(event) {
     const currentPopup = document.querySelector('.popup_opened');
     if (currentPopup && event.target === event.currentTarget) { 
-        togglePopup(currentPopup);
+        closePopup(currentPopup); 
     }
 }
 
-function popupErrorUpdate(form) {
-    const inputsArray = Array.from(form.querySelectorAll('.popup__input'));
-    inputsArray.forEach((inputElement) => {
-        hideInputError(inputElement, validationParams);
-    });
+function closePopupByEsc(event) {
+    const currentPopup = document.querySelector('.popup_opened');
+    if (currentPopup && event.key === 'Escape') { 
+        closePopup(currentPopup);
+    }
 }
 
 editButton.addEventListener('click', () => {
@@ -159,24 +126,25 @@ editButton.addEventListener('click', () => {
     nameInput.dispatchEvent(new Event('input'));
     jobInput.dispatchEvent(new Event('input'));
 
-    togglePopup(editPopup);
+    openPopup(editPopup); 
 });
 
-editPopupClose.addEventListener('click', () => togglePopup(editPopup));
+editPopupClose.addEventListener('click', () => closePopup(editPopup)); 
 editForm.addEventListener('submit', editFormSubmitHandler);
 editPopup.addEventListener('mousedown', closePopupByOverlay);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
     popupErrorUpdate(addForm);
-    togglePopup(addPopup);
+    updateFormButtonState(addForm, validationParams);
+    openPopup(addPopup); // open
 });
 
-addPopupClose.addEventListener('click', () => togglePopup(addPopup));
+addPopupClose.addEventListener('click', () => closePopup(addPopup)); 
 addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
-picturePopupClose.addEventListener('click', () => togglePopup(picturePopup));
+picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
 picturePopup.addEventListener('mousedown', closePopupByOverlay);
 
 initialPicturesElements.forEach(item => {
