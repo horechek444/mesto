@@ -49,11 +49,19 @@ const setEventListeners = (formElement, validationParams) => {
     });
 };
 
+function popupErrorUpdate(formElement) {
+    const inputsArray = Array.from(formElement.querySelectorAll('.popup__input'));
+
+    inputsArray.forEach((inputElement) => {
+        hideInputError(inputElement, validationParams);
+    });
+}
+
 const updateFormButtonState = (formElement, validationParams) => {
     const inputList = Array.from(formElement.querySelectorAll(validationParams.inputElement));
     const buttonElement = formElement.querySelector(validationParams.buttonElement); 
 
-    toggleButtonState(inputList, buttonElement, validationParams); 
+    toggleButtonState(inputList, buttonElement, validationParams);
 };
 
 const enableValidation = (validationParams) => {
