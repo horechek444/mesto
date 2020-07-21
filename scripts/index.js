@@ -71,24 +71,24 @@ function showPopupPicturesElement(event) {
 function addPicturesElementListeners(picturesElement) {
     picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
     picturesElement.querySelector('.pictures__like').addEventListener('click', likePicturesElement);
-    picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
+    // picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
 }
 
 function createPicturesElement(newElement) {
-    const picturesElement = picturesTemplateElement.content.cloneNode(true); // +
-    const picturesImage = picturesElement.querySelector('.pictures__image');
+    // const picturesElement = picturesTemplateElement.content.cloneNode(true); // +
+    // const picturesImage = picturesElement.querySelector('.pictures__image');
 
-    picturesElement.querySelector('.pictures__title').textContent = newElement.name;
-    picturesImage.src = newElement.link;
-    picturesImage.alt = newElement.name;
+    // picturesElement.querySelector('.pictures__title').textContent = newElement.name;
+    // picturesImage.src = newElement.link;
+    // picturesImage.alt = newElement.name;
     addPicturesElementListeners(picturesElement);
 
-    return picturesElement;
+    // return picturesElement;
 }
 
-function renderPicturesElement(element) {
-    picturesListElement.prepend(element);
-}
+// function renderPicturesElement(element) {
+//     picturesListElement.prepend(element);
+// }
 
 function addFormSubmitHandler(event) {
     event.preventDefault();
