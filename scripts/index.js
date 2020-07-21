@@ -75,7 +75,7 @@ function addPicturesElementListeners(picturesElement) {
 }
 
 function createPicturesElement(newElement) {
-    const picturesElement = picturesTemplateElement.content.cloneNode(true);
+    const picturesElement = picturesTemplateElement.content.cloneNode(true); // +
     const picturesImage = picturesElement.querySelector('.pictures__image');
 
     picturesElement.querySelector('.pictures__title').textContent = newElement.name;
@@ -137,7 +137,7 @@ addButton.addEventListener('click', () => {
     addForm.reset();
     popupErrorUpdate(addForm);
     updateFormButtonState(addForm, validationParams);
-    openPopup(addPopup); // open
+    openPopup(addPopup);
 });
 
 addPopupClose.addEventListener('click', () => closePopup(addPopup)); 
