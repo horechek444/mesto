@@ -1,3 +1,6 @@
+import Card from '../scripts/Card.js';
+import FormValidator from '../scripts/FormValidator.js';
+
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
 const editPopupClose = editPopup.querySelector('.popup__close');
@@ -14,15 +17,43 @@ const addForm = addPopup.querySelector('.popup__form');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
-const picturePopup = document.querySelector('.popup_type_picture');
-const picturePopupClose = picturePopup.querySelector('.popup__close');
-const picturePopupImage = picturePopup.querySelector('.popup__image');
-const picturePopupCaption = picturePopup.querySelector('.popup__caption');
+// const picturePopup = document.querySelector('.popup_type_picture');
+// const picturePopupClose = picturePopup.querySelector('.popup__close');
+// const picturePopupImage = picturePopup.querySelector('.popup__image');
+// const picturePopupCaption = picturePopup.querySelector('.popup__caption');
 
-const picturesTemplateElement = document.querySelector('.pictures-template');
-const picturesListElement = document.querySelector('.pictures__list');
+// const picturesTemplateElement = document.querySelector('.pictures-template');
+// const picturesListElement = document.querySelector('.pictures__list');
 
-const validationParams = {
+
+export const cardsList = [
+    {
+        name: 'Калининград',
+        link: './images/kaliningrad.jpg'
+    },
+    {
+        name: 'Саха',
+        link: './images/sakha.jpg'
+    },
+    {
+        name: 'Владивосток',
+        link: './images/vladivostok.jpg'
+    },
+    {
+        name: 'Камчатка',
+        link: './images/kamchatka.jpg'
+    },
+    {
+        name: 'Сибирь',
+        link: './images/siberia.jpg'
+    },
+    {
+        name: 'Клин',
+        link: './images/klin.jpg'
+    }
+];
+
+export const validationParams = {
     formElement: '.popup__form',
     inputElement: '.popup__input',
     buttonElement: '.popup__submit',    
@@ -51,40 +82,40 @@ function editFormSubmitHandler(event) {
     closePopup(editPopup);
 }
 
-function deletePicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__item');
-    picturesElement.remove();
-}
+// function deletePicturesElement(event) {
+//     const picturesElement = event.target.closest('.pictures__item');
+//     picturesElement.remove();
+// }
 
-function likePicturesElement(event) {
-    event.target.classList.toggle('pictures__like_active');
-}
+// function likePicturesElement(event) {
+//     event.target.classList.toggle('pictures__like_active');
+// }
 
-function showPopupPicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__image');
+// function showPopupPicturesElement(event) {
+//     const picturesElement = event.target.closest('.pictures__image');
 
-    picturePopupImage.src = picturesElement.src;
-    picturePopupCaption.textContent = picturesElement.alt;
-    openPopup(picturePopup); 
-}
+//     picturePopupImage.src = picturesElement.src;
+//     picturePopupCaption.textContent = picturesElement.alt;
+//     openPopup(picturePopup); 
+// }
 
-function addPicturesElementListeners(picturesElement) {
-    picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
-    picturesElement.querySelector('.pictures__like').addEventListener('click', likePicturesElement);
-    // picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
-}
+// function addPicturesElementListeners(picturesElement) {
+//     picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
+//     picturesElement.querySelector('.pictures__like').addEventListener('click', likePicturesElement);
+//     picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
+// }
 
-function createPicturesElement(newElement) {
-    // const picturesElement = picturesTemplateElement.content.cloneNode(true); // +
-    // const picturesImage = picturesElement.querySelector('.pictures__image');
+// function createPicturesElement(newElement) {
+//     const picturesElement = picturesTemplateElement.content.cloneNode(true); // +
+//     const picturesImage = picturesElement.querySelector('.pictures__image');
 
-    // picturesElement.querySelector('.pictures__title').textContent = newElement.name;
-    // picturesImage.src = newElement.link;
-    // picturesImage.alt = newElement.name;
-    addPicturesElementListeners(picturesElement);
+//     picturesElement.querySelector('.pictures__title').textContent = newElement.name;
+//     picturesImage.src = newElement.link;
+//     picturesImage.alt = newElement.name;
+//     addPicturesElementListeners(picturesElement);
 
-    // return picturesElement;
-}
+//     return picturesElement;
+// }
 
 // function renderPicturesElement(element) {
 //     picturesListElement.prepend(element);
@@ -118,7 +149,7 @@ function closePopupByEsc(event) {
 }
 
 editButton.addEventListener('click', () => {
-    popupErrorUpdate(editForm);
+    //popupErrorUpdate(editForm);
 
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
@@ -135,8 +166,8 @@ editPopup.addEventListener('mousedown', closePopupByOverlay);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
-    popupErrorUpdate(addForm);
-    updateFormButtonState(addForm, validationParams);
+    //popupErrorUpdate(addForm);
+    //updateFormButtonState(addForm, validationParams);
     openPopup(addPopup);
 });
 
@@ -144,12 +175,20 @@ addPopupClose.addEventListener('click', () => closePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
-picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
-picturePopup.addEventListener('mousedown', closePopupByOverlay);
+// picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
+// picturePopup.addEventListener('mousedown', closePopupByOverlay);
 
-initialPicturesElements.forEach(item => {
-    const element = createPicturesElement(item);
-    renderPicturesElement(element);
+// initialPicturesElements.forEach(item => {
+//     const element = createPicturesElement(item);
+//     renderPicturesElement(element);
+// });
+
+// enableValidation(validationParams);
+
+
+cardsList.forEach(item => {
+    const card = new Card(item, '.pictures-template');
+    const cardElement = card.generateCard();
+
+    document.querySelector('.pictures__list').prepend(cardElement);
 });
-
-enableValidation(validationParams);

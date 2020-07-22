@@ -1,36 +1,9 @@
-const cardsList = [
-    {
-        name: 'Калининград',
-        link: './images/kaliningrad.jpg'
-    },
-    {
-        name: 'Саха',
-        link: './images/sakha.jpg'
-    },
-    {
-        name: 'Владивосток',
-        link: './images/vladivostok.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: './images/kamchatka.jpg'
-    },
-    {
-        name: 'Сибирь',
-        link: './images/siberia.jpg'
-    },
-    {
-        name: 'Клин',
-        link: './images/klin.jpg'
-    }
-];
-
 const popupElement = document.querySelector('.popup_type_picture');
 const popupImage = popupElement.querySelector('.popup__image');
 const popupCloseButton = popupElement.querySelector('.popup__close');
 const popupCaption = popupElement.querySelector('.popup__caption');
 
-class Card {
+export default class Card {
     constructor(data, cardSelector) {
         this._name = data.name;
         this._link = data.link;
@@ -96,10 +69,3 @@ class Card {
         this._element.querySelector('.pictures__like').removeEventListener('click', this._likeCard);
     }
 }
-
-cardsList.forEach(item => {
-    const card = new Card(item, '.pictures-template');
-    const cardElement = card.generateCard();
-
-    document.querySelector('.pictures__list').prepend(cardElement);
-});
