@@ -26,7 +26,7 @@ const linkInput = addForm.querySelector('.popup__input_type_link');
 // const picturesListElement = document.querySelector('.pictures__list');
 
 
-export const cardsList = [
+const cardsList = [
     {
         name: 'Калининград',
         link: './images/kaliningrad.jpg'
@@ -53,7 +53,7 @@ export const cardsList = [
     }
 ];
 
-export const validationParams = {
+const validationParams = {
     formElement: '.popup__form',
     inputElement: '.popup__input',
     buttonElement: '.popup__submit',    
@@ -185,10 +185,16 @@ addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 // enableValidation(validationParams);
 
-
 cardsList.forEach(item => {
     const card = new Card(item, '.pictures-template');
     const cardElement = card.generateCard();
 
     document.querySelector('.pictures__list').prepend(cardElement);
 });
+
+formsList = Array.from(document.querySelectorAll('.popup__form'));
+
+formsList.forEach(form => {
+    const formValidator = new FormValidator(validationParams, form);
+    const formValid = formValidator.enableValidation();
+})
