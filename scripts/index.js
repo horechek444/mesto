@@ -1,5 +1,5 @@
-import Card from '../scripts/Card.js';
-import FormValidator from '../scripts/FormValidator.js';
+// import Card from '../scripts/Card.js';
+// import FormValidator from '../scripts/FormValidator.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -53,16 +53,16 @@ const cardsList = [
     }
 ];
 
-const validationParams = {
-    formElement: '.popup__form',
-    inputElement: '.popup__input',
-    buttonElement: '.popup__submit',    
-    inactiveButtonClass: 'popup__submit_type_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorShowClass: 'popup__error_type_active',
-    controlSelectorClass: '.popup__control',
-    errorClass: '.popup__error'
-};
+// const validationParams = {
+//     formElement: '.popup__form',
+//     inputElement: '.popup__input',
+//     buttonElement: '.popup__submit',    
+//     inactiveButtonClass: 'popup__submit_type_disabled',
+//     inputErrorClass: 'popup__input_type_error',
+//     errorShowClass: 'popup__error_type_active',
+//     controlSelectorClass: '.popup__control',
+//     errorClass: '.popup__error'
+// };
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
@@ -185,16 +185,16 @@ addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 // enableValidation(validationParams);
 
-cardsList.forEach(item => {
-    const card = new Card(item, '.pictures-template');
-    const cardElement = card.generateCard();
+// cardsList.forEach(item => {
+//     const card = new Card(item, '.pictures-template');
+//     const cardElement = card.generateCard();
 
-    document.querySelector('.pictures__list').prepend(cardElement);
-});
+//     document.querySelector('.pictures__list').prepend(cardElement);
+// });
 
-formsList = Array.from(document.querySelectorAll('.popup__form'));
+// const formsList = Array.from(document.querySelectorAll('.popup__form'));
 
-formsList.forEach(form => {
-    const formValidator = new FormValidator(validationParams, form);
-    const formValid = formValidator.enableValidation();
-})
+// formsList.forEach(form => {
+//     const formValidator = new FormValidator(validationParams, form);
+//     const formValid = formValidator.enableValidation();
+// })
