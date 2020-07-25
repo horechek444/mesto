@@ -13,7 +13,7 @@ const jobElement = document.querySelector('.profile__subtitle');
 const addButton = document.querySelector('.button_add');
 const addPopup = document.querySelector('.popup_type_add');
 const addPopupClose = addPopup.querySelector('.popup__close');
-const addForm = addPopup.querySelector('.popup__form');
+const addForm = addPopup.querySelector('.form_type_add');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
@@ -23,7 +23,7 @@ const linkInput = addForm.querySelector('.popup__input_type_link');
 // const picturePopupCaption = picturePopup.querySelector('.popup__caption');
 
 // const picturesTemplateElement = document.querySelector('.pictures-template');
-// const picturesListElement = document.querySelector('.pictures__list');
+const picturesListElement = document.querySelector('.pictures__list');
 
 
 const cardsList = [
@@ -106,7 +106,7 @@ function editFormSubmitHandler(event) {
 // }
 
 // function createPicturesElement(newElement) {
-//     const picturesElement = picturesTemplateElement.content.cloneNode(true); // +
+//     const picturesElement = picturesTemplateElement.content.cloneNode(true);
 //     const picturesImage = picturesElement.querySelector('.pictures__image');
 
 //     picturesElement.querySelector('.pictures__title').textContent = newElement.name;
@@ -117,9 +117,9 @@ function editFormSubmitHandler(event) {
 //     return picturesElement;
 // }
 
-// function renderPicturesElement(element) {
-//     picturesListElement.prepend(element);
-// }
+function renderPicturesElement(element) {
+    picturesListElement.prepend(element);
+}
 
 function addFormSubmitHandler(event) {
     event.preventDefault();
@@ -129,8 +129,10 @@ function addFormSubmitHandler(event) {
         link: linkInput.value
     };
 
-    const element = createPicturesElement(newElement);
-    renderPicturesElement(element);
+    const userCard = new Card(newElement, '.pictures-template');
+    const cardElement = userCard.generateCard();
+
+    renderPicturesElement(cardElement);
     closePopup(addPopup); 
 }
 
@@ -149,7 +151,7 @@ function closePopupByEsc(event) {
 }
 
 editButton.addEventListener('click', () => {
-    //popupErrorUpdate(editForm);
+    validEdit._popupErrorUpdate(editForm);
 
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
@@ -166,8 +168,8 @@ editPopup.addEventListener('mousedown', closePopupByOverlay);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
-    //popupErrorUpdate(addForm);
-    //updateFormButtonState(addForm, validationParams);
+    validAdd._popupErrorUpdate(addForm);
+    validAdd._updateFormButtonState(addForm);
     openPopup(addPopup);
 });
 
@@ -189,18 +191,19 @@ cardsList.forEach(item => {
     const card = new Card(item, '.pictures-template');
     const cardElement = card.generateCard();
 
-    document.querySelector('.pictures__list').prepend(cardElement);
+    renderPicturesElement(cardElement);
 });
 
-const valid1 = new FormValidator(validationParams, '.form_type_add');
-const form1 = valid1.enableValidation();
+const validAdd = new FormValidator(validationParams, '.form_type_add');
+const formAddValid = validAdd.enableValidation();
 
-const valid2 = new FormValidator(validationParams, '.form_type_edit');
-const form2 = valid2.enableValidation();
+const validEdit = new FormValidator(validationParams, '.form_type_edit');
+const formEditValid = validEdit.enableValidation();
 
-// const formsList = Array.from(document.querySelectorAll('.popup__form'));
-
+// const formsList = Array.from(document.forms);
 // formsList.forEach(form => {
-//     const valid = new FormValidator(validationParams, form);
-//     const formValid = valid.enableValidation();
+//     const formClassNames = form.className;
+//     const formSelector = formClassNames.split(' ');
+//     const valid = new FormValidator(validationParams, formSelector[1]);
+    
 // })

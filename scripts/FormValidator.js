@@ -1,14 +1,3 @@
-// const validationParams = {
-//     formElement: '.popup__form',
-//     inputElement: '.popup__input',
-//     buttonElement: '.popup__submit',    
-//     inactiveButtonClass: 'popup__submit_type_disabled',
-//     inputErrorClass: 'popup__input_type_error',
-//     errorShowClass: 'popup__error_type_active',
-//     controlSelectorClass: '.popup__control',
-//     errorClass: '.popup__error'
-// };
-
 export default class FormValidator {
     constructor(validationParams, formSelector) {
         this._formElement = validationParams.formElement;
@@ -91,7 +80,6 @@ export default class FormValidator {
 
     enableValidation() {
         const formElement = document.querySelector(this._formSelector);
-        // this._formElement.addEventListener('keyup', event => console.log(event));
         
         this._updateFormButtonState(formElement); 
         this._setEventListeners(formElement); 
