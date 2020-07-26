@@ -1,5 +1,10 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
+import { cardsList } from '../scripts/cards.js';
+import { openPopup } from '../scripts/utils.js';
+import { closePopup } from '../scripts/utils.js';
+import { closePopupByOverlay } from '../scripts/utils.js';
+import { closePopupByEsc } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -17,41 +22,8 @@ const addForm = addPopup.querySelector('.form_type_add');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
-// const picturePopup = document.querySelector('.popup_type_picture');
-// const picturePopupClose = picturePopup.querySelector('.popup__close');
-// const picturePopupImage = picturePopup.querySelector('.popup__image');
-// const picturePopupCaption = picturePopup.querySelector('.popup__caption');
-
-// const picturesTemplateElement = document.querySelector('.pictures-template');
+const picturePopup = document.querySelector('.popup_type_picture');
 const picturesListElement = document.querySelector('.pictures__list');
-
-
-const cardsList = [
-    {
-        name: 'Калининград',
-        link: './images/kaliningrad.jpg'
-    },
-    {
-        name: 'Саха',
-        link: './images/sakha.jpg'
-    },
-    {
-        name: 'Владивосток',
-        link: './images/vladivostok.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: './images/kamchatka.jpg'
-    },
-    {
-        name: 'Сибирь',
-        link: './images/siberia.jpg'
-    },
-    {
-        name: 'Клин',
-        link: './images/klin.jpg'
-    }
-];
 
 const validationParams = {
     formElement: '.popup__form',
@@ -64,15 +36,15 @@ const validationParams = {
     errorClass: '.popup__error'
 };
 
-function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', closePopupByEsc);
-}
+// function openPopup(popup) {
+//     popup.classList.add('popup_opened');
+//     document.addEventListener('keydown', closePopupByEsc);
+// }
 
-function closePopup(popup) {
-    popup.classList.remove('popup_opened');
-    document.removeEventListener('keydown', closePopupByEsc);
-}
+// function closePopup(popup) {
+//     popup.classList.remove('popup_opened');
+//     document.removeEventListener('keydown', closePopupByEsc);
+// }
 
 function editFormSubmitHandler(event) {
     event.preventDefault(); 
@@ -136,22 +108,22 @@ function addFormSubmitHandler(event) {
     closePopup(addPopup); 
 }
 
-function closePopupByOverlay(event) {
-    const currentPopup = document.querySelector('.popup_opened');
-    if (currentPopup && event.target === event.currentTarget) { 
-        closePopup(currentPopup); 
-    }
-}
+// function closePopupByOverlay(event) {
+//     const currentPopup = document.querySelector('.popup_opened');
+//     if (currentPopup && event.target === event.currentTarget) { 
+//         closePopup(currentPopup); 
+//     }
+// }
 
-function closePopupByEsc(event) {
-    const currentPopup = document.querySelector('.popup_opened');
-    if (currentPopup && event.key === 'Escape') { 
-        closePopup(currentPopup);
-    }
-}
+// function closePopupByEsc(event) {
+//     const currentPopup = document.querySelector('.popup_opened');
+//     if (currentPopup && event.key === 'Escape') { 
+//         closePopup(currentPopup);
+//     }
+// }
 
 editButton.addEventListener('click', () => {
-    validEdit._popupErrorUpdate(editForm);
+    validEdit.updateErrorsAndButtonState(editForm);
 
     nameInput.value = nameElement.textContent;
     jobInput.value = jobElement.textContent;
@@ -168,8 +140,7 @@ editPopup.addEventListener('mousedown', closePopupByOverlay);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
-    validAdd._popupErrorUpdate(addForm);
-    validAdd._updateFormButtonState(addForm);
+    validAdd.updateErrorsAndButtonState(addForm);
     openPopup(addPopup);
 });
 
@@ -178,7 +149,7 @@ addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 // picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
-// picturePopup.addEventListener('mousedown', closePopupByOverlay);
+picturePopup.addEventListener('mousedown', closePopupByOverlay);
 
 // initialPicturesElements.forEach(item => {
 //     const element = createPicturesElement(item);
@@ -203,7 +174,7 @@ const formEditValid = validEdit.enableValidation();
 // const formsList = Array.from(document.forms);
 // formsList.forEach(form => {
 //     const formClassNames = form.className;
-//     const formSelector = formClassNames.split(' ');
-//     const valid = new FormValidator(validationParams, formSelector[1]);
+//     const formSelectors = formClassNames.split(' ');
+//     const valid = new FormValidator(validationParams, formSelectors[1]);
     
 // })

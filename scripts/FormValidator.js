@@ -63,25 +63,21 @@ export default class FormValidator {
         });
     }
 
-    _popupErrorUpdate = (formElement) => {
-        const inputsArray = Array.from(formElement.querySelectorAll('.popup__input'));
-    
-        inputsArray.forEach((inputElement) => {
-            this._hideInputError(inputElement);
-        });
-    }
-
-    _updateFormButtonState = (formElement) => {
+    updateErrorsAndButtonState = (formElement) => {
         const inputList = Array.from(formElement.querySelectorAll(this._inputElement));
         const buttonElement = formElement.querySelector(this._buttonElement); 
-    
+        
+        inputList.forEach((inputElement) => {
+            this._hideInputError(inputElement);
+        });
+
         this._toggleButtonState(inputList, buttonElement);
     };
 
     enableValidation() {
         const formElement = document.querySelector(this._formSelector);
         
-        this._updateFormButtonState(formElement); 
+        this.updateErrorsAndButtonState(formElement); 
         this._setEventListeners(formElement); 
 
         formElement.addEventListener('submit', (event) => {
@@ -89,3 +85,15 @@ export default class FormValidator {
         });    
     }
 }
+
+// class editFormValidator extends FormValidator {
+//     constructor(validationParams) {
+//         super(validationParams)
+//     }
+// }
+
+// class addFormValidator extends FormValidator {
+//     constructor(validationParams) {
+//         super(validationParams)
+//     }
+// }

@@ -36,20 +36,6 @@ export default class Card {
         popupElement.classList.add('popup_opened');
     }
 
-    _closePopupByOverlay = (event) => {
-        const currentPopup = document.querySelector('.popup_opened');
-        if (currentPopup && event.target === event.currentTarget) { 
-            this._handleClosePopup; 
-        }
-    }
-    
-    _closePopupByEsc = (event) => {
-        const currentPopup = document.querySelector('.popup_opened');
-        if (currentPopup && event.key === 'Escape') { 
-            this._handleClosePopup;
-        }
-    }
-
     _handleClosePopup = () => {
         popupImage.src = '';
         popupImage.alt = '';
@@ -70,7 +56,6 @@ export default class Card {
     _setEventListeners() {
         this._element.querySelector('.pictures__image').addEventListener('click', this._handleOpenPopup);
         popupCloseButton.addEventListener('click', this._handleClosePopup);
-        popupElement.addEventListener('mousedown', this._closePopupByOverlay);
 
         this._element.querySelector('.pictures__delete').addEventListener('click', this._deleteCard);
         this._element.querySelector('.pictures__like').addEventListener('click', this._likeCard);
