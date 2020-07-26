@@ -1,10 +1,7 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
 import { cardsList } from '../scripts/cards.js';
-import { openPopup } from '../scripts/utils.js';
-import { closePopup } from '../scripts/utils.js';
-import { closePopupByOverlay } from '../scripts/utils.js';
-import { closePopupByEsc } from '../scripts/utils.js';
+import { openPopup, closePopup, closePopupByOverlay } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -152,7 +149,7 @@ addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 // picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
-popupElement.addEventListener('mousedown', closePopupByOverlay);
+// popupElement.addEventListener('mousedown', closePopupByOverlay);
 
 // initialPicturesElements.forEach(item => {
 //     const element = createPicturesElement(item);
