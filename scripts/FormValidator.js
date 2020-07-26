@@ -12,14 +12,14 @@ export default class FormValidator {
         this._targetFormElement = targetFormElement;
     }
 
-    _showInputError = (inputElement, errorMessage) => {
+    _showInputError(inputElement, errorMessage) {
         const errorElement = inputElement.closest(this._controlSelectorClass).querySelector(this._errorClass);
         inputElement.classList.add(this._inputErrorClass);
         errorElement.textContent = errorMessage;
         errorElement.classList.add(this._errorShowClass);
     }
 
-    _hideInputError = (inputElement) => {
+    _hideInputError(inputElement) {
         const errorElement = inputElement.closest(this._controlSelectorClass).querySelector(this._errorClass);
     
         inputElement.classList.remove(this._inputErrorClass);
@@ -27,7 +27,7 @@ export default class FormValidator {
         errorElement.textContent = '';
     }
 
-    _checkInputValidity = (inputElement) => {
+    _checkInputValidity (inputElement) {
         if(!inputElement.validity.valid) {
             this._showInputError(inputElement, inputElement.validationMessage);
         } else {
@@ -35,13 +35,13 @@ export default class FormValidator {
         }
     }
 
-    _hasInvalidInput = (inputList) => {
+    _hasInvalidInput(inputList) {
         return inputList.some((inputElement) => {
             return !inputElement.validity.valid; 
         });
     }
 
-    _toggleButtonState = (inputList, buttonElement) => {
+    _toggleButtonState(inputList, buttonElement) {
         if (this._hasInvalidInput(inputList)) { 
             buttonElement.classList.add(this._inactiveButtonClass);
             buttonElement.setAttribute('disabled', true); 
@@ -51,7 +51,7 @@ export default class FormValidator {
         }
     }
 
-    _setEventListeners = (formElement) => {
+    _setEventListeners(formElement) {
         const inputList = Array.from(formElement.querySelectorAll(this._inputElement)); 
         const buttonElement = formElement.querySelector(this._buttonElement);
         
@@ -63,7 +63,7 @@ export default class FormValidator {
         });
     }
 
-    updateErrorsAndButtonState = (formElement) => {
+    updateErrorsAndButtonState(formElement) {
         const inputList = Array.from(formElement.querySelectorAll(this._inputElement));
         const buttonElement = formElement.querySelector(this._buttonElement); 
         
