@@ -22,10 +22,14 @@ export function closePopupByEsc(event) {
     }
 }
 
-export function showPopupPicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__image');
+import { popupElement } from '../scripts/index.js';
+import { popupImage } from '../scripts/index.js';
+import { popupCaption } from '../scripts/index.js';
 
-    picturePopupImage.src = picturesElement.src;
-    picturePopupCaption.textContent = picturesElement.alt;
-    openPopup(picturePopup); 
+export function showPopupPicturesElement(link, name) {
+    popupImage.src = link;
+    popupImage.alt = name;
+    popupCaption.textContent = name;
+
+    openPopup(popupElement); 
 }

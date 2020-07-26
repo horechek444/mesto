@@ -1,7 +1,8 @@
-const popupElement = document.querySelector('.popup_type_picture');
-const popupImage = popupElement.querySelector('.popup__image');
-const popupCloseButton = popupElement.querySelector('.popup__close');
-const popupCaption = popupElement.querySelector('.popup__caption');
+import { popupElement } from '../scripts/index.js';
+import { popupImage } from '../scripts/index.js';
+import { popupCloseButton } from '../scripts/index.js';
+import { popupCaption } from '../scripts/index.js';
+import { showPopupPicturesElement } from '../scripts/utils.js';
 
 export default class Card {
     constructor(data, cardSelector) {
