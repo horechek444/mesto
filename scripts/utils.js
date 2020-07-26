@@ -21,11 +21,3 @@ export function closePopupByEsc(event) {
         closePopup(currentPopup);
     }
 }
-
-export function showPopupPicturesElement(event) {
-    const picturesElement = event.target.closest('.pictures__image');
-
-    picturePopupImage.src = picturesElement.src;
-    picturePopupCaption.textContent = picturesElement.alt;
-    openPopup(picturePopup); 
-}

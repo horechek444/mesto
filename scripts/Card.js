@@ -1,7 +1,5 @@
-const popupElement = document.querySelector('.popup_type_picture');
-const popupImage = popupElement.querySelector('.popup__image');
-const popupCloseButton = popupElement.querySelector('.popup__close');
-const popupCaption = popupElement.querySelector('.popup__caption');
+import { popupElement, popupImage, popupCloseButton, popupCaption } from '../scripts/index.js';
+import { closePopupByEsc, closePopupByOverlay } from '../scripts/utils.js';
 
 export default class Card {
     constructor(data, cardSelector) {
@@ -32,7 +30,7 @@ export default class Card {
         popupImage.src = this._link;
         popupImage.alt = this._name;
         popupCaption.textContent = this._name;
-
+        document.addEventListener('keydown', closePopupByEsc);
         popupElement.classList.add('popup_opened');
     }
 
@@ -40,7 +38,7 @@ export default class Card {
         popupImage.src = '';
         popupImage.alt = '';
         popupCaption.textContent = '';
-        
+        document.removeEventListener('keydown', closePopupByEsc);
         popupElement.classList.remove('popup_opened');
     }
 
@@ -56,6 +54,7 @@ export default class Card {
     _setEventListeners() {
         this._element.querySelector('.pictures__image').addEventListener('click', this._handleOpenPopup);
         popupCloseButton.addEventListener('click', this._handleClosePopup);
+        popupElement.addEventListener('mousedown', closePopupByOverlay);
 
         this._element.querySelector('.pictures__delete').addEventListener('click', this._deleteCard);
         this._element.querySelector('.pictures__like').addEventListener('click', this._likeCard);
@@ -64,6 +63,7 @@ export default class Card {
     _removeEventListeners() {
         this._element.querySelector('.pictures__image').removeEventListener('click', this._handleOpenPopup);
         popupCloseButton.removeEventListener('click', this._handleClosePopup);
+        popupElement.removeEventListener('mousedown', closePopupByOverlay);
         
         this._element.querySelector('.pictures__delete').removeEventListener('click', this._deleteCard);
         this._element.querySelector('.pictures__like').removeEventListener('click', this._likeCard);

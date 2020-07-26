@@ -1,10 +1,7 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
 import { cardsList } from '../scripts/cards.js';
-import { openPopup } from '../scripts/utils.js';
-import { closePopup } from '../scripts/utils.js';
-import { closePopupByOverlay } from '../scripts/utils.js';
-import { closePopupByEsc } from '../scripts/utils.js';
+import { openPopup, closePopup, closePopupByOverlay } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -18,11 +15,14 @@ const jobElement = document.querySelector('.profile__subtitle');
 const addButton = document.querySelector('.button_add');
 const addPopup = document.querySelector('.popup_type_add');
 const addPopupClose = addPopup.querySelector('.popup__close');
-const addForm = addPopup.querySelector('.form_type_add');
+const addForm = addPopup.querySelector('.popup__form');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
-const picturePopup = document.querySelector('.popup_type_picture');
+export const popupElement = document.querySelector('.popup_type_picture');
+export const popupImage = popupElement.querySelector('.popup__image');
+export const popupCloseButton = popupElement.querySelector('.popup__close');
+export const popupCaption = popupElement.querySelector('.popup__caption');
 const picturesListElement = document.querySelector('.pictures__list');
 
 const validationParams = {
@@ -149,7 +149,7 @@ addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 // picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
-picturePopup.addEventListener('mousedown', closePopupByOverlay);
+// popupElement.addEventListener('mousedown', closePopupByOverlay);
 
 // initialPicturesElements.forEach(item => {
 //     const element = createPicturesElement(item);
@@ -165,10 +165,10 @@ cardsList.forEach(item => {
     renderPicturesElement(cardElement);
 });
 
-const validAdd = new FormValidator(validationParams, '.form_type_add');
+const validAdd = new FormValidator(validationParams, addForm);
 const formAddValid = validAdd.enableValidation();
 
-const validEdit = new FormValidator(validationParams, '.form_type_edit');
+const validEdit = new FormValidator(validationParams, editForm);
 const formEditValid = validEdit.enableValidation();
 
 // const formsList = Array.from(document.forms);

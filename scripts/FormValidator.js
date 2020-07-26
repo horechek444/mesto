@@ -1,5 +1,5 @@
 export default class FormValidator {
-    constructor(validationParams, formSelector) {
+    constructor(validationParams, targetFormElement) {
         this._formElement = validationParams.formElement;
         this._inputElement = validationParams.inputElement;
         this._buttonElement = validationParams.buttonElement;    
@@ -9,7 +9,7 @@ export default class FormValidator {
         this._controlSelectorClass = validationParams.controlSelectorClass;
         this._errorClass = validationParams.errorClass;
 
-        this._formSelector = formSelector;
+        this._targetFormElement = targetFormElement;
     }
 
     _showInputError = (inputElement, errorMessage) => {
@@ -75,25 +75,11 @@ export default class FormValidator {
     };
 
     enableValidation() {
-        const formElement = document.querySelector(this._formSelector);
-        
-        this.updateErrorsAndButtonState(formElement); 
-        this._setEventListeners(formElement); 
+        this.updateErrorsAndButtonState(this._targetFormElement); 
+        this._setEventListeners(this._targetFormElement); 
 
-        formElement.addEventListener('submit', (event) => {
+        this._targetFormElement.addEventListener('submit', (event) => {
             event.preventDefault();
         });    
     }
 }
-
-// class editFormValidator extends FormValidator {
-//     constructor(validationParams) {
-//         super(validationParams)
-//     }
-// }
-
-// class addFormValidator extends FormValidator {
-//     constructor(validationParams) {
-//         super(validationParams)
-//     }
-// }
