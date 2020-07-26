@@ -7,7 +7,7 @@ const showInputError = (inputElement, errorMessage, validationParams) => {
 
 const hideInputError = (inputElement, validationParams) => {
     const errorElement = inputElement.closest(validationParams.controlSelectorClass).querySelector(validationParams.errorClass);
-
+    
     inputElement.classList.remove(validationParams.inputErrorClass);
     errorElement.classList.remove(validationParams.errorShowClass);
     errorElement.textContent = '';

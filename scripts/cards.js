@@ -1,4 +1,4 @@
-const initialPicturesElements = [
+export const cardsList = [
     {
         name: 'Калининград',
         link: './images/kaliningrad.jpg'
