@@ -26,7 +26,7 @@ export default class Card {
         return this._element;
     }
 
-    _handleOpenPopup = () => {
+    _handleOpenPopup() {
         popupImage.src = this._link;
         popupImage.alt = this._name;
         popupCaption.textContent = this._name;
@@ -34,7 +34,7 @@ export default class Card {
         popupElement.classList.add('popup_opened');
     }
 
-    _handleClosePopup = () => {
+    _handleClosePopup() {
         popupImage.src = '';
         popupImage.alt = '';
         popupCaption.textContent = '';
@@ -42,30 +42,30 @@ export default class Card {
         popupElement.classList.remove('popup_opened');
     }
 
-    _likeCard = () => {
+    _likeCard() {
         this._element.querySelector('.pictures__like').classList.toggle('pictures__like_active');
     }
 
-    _deleteCard = () => {
+    _deleteCard() {
         this._removeEventListeners();
         this._element.remove();
     }
 
     _setEventListeners() {
-        this._element.querySelector('.pictures__image').addEventListener('click', this._handleOpenPopup);
-        popupCloseButton.addEventListener('click', this._handleClosePopup);
+        this._element.querySelector('.pictures__image').addEventListener('click', () => this._handleOpenPopup());
+        popupCloseButton.addEventListener('click', () => this._handleClosePopup());
         popupElement.addEventListener('mousedown', closePopupByOverlay);
 
-        this._element.querySelector('.pictures__delete').addEventListener('click', this._deleteCard);
-        this._element.querySelector('.pictures__like').addEventListener('click', this._likeCard);
+        this._element.querySelector('.pictures__delete').addEventListener('click', () => this._deleteCard());
+        this._element.querySelector('.pictures__like').addEventListener('click', () => this._likeCard());
     }
 
     _removeEventListeners() {
-        this._element.querySelector('.pictures__image').removeEventListener('click', this._handleOpenPopup);
-        popupCloseButton.removeEventListener('click', this._handleClosePopup);
+        this._element.querySelector('.pictures__image').removeEventListener('click', () => this._handleOpenPopup());
+        popupCloseButton.removeEventListener('click', () => this._handleClosePopup());
         popupElement.removeEventListener('mousedown', closePopupByOverlay);
         
-        this._element.querySelector('.pictures__delete').removeEventListener('click', this._deleteCard);
-        this._element.querySelector('.pictures__like').removeEventListener('click', this._likeCard);
+        this._element.querySelector('.pictures__delete').removeEventListener('click', () => this._deleteCard());
+        this._element.querySelector('.pictures__like').removeEventListener('click', () => this._likeCard());
     }
 }
