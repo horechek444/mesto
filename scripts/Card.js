@@ -63,7 +63,7 @@ export default class Card {
     _removeEventListeners() {
         this._element.querySelector('.pictures__image').removeEventListener('click', () => this._handleOpenPopup());
         popupCloseButton.removeEventListener('click', () => this._handleClosePopup());
-        popupElement.removeEventListener('mousedown', closePopupByOverlay);
+    //     popupElement.removeEventListener('mousedown', closePopupByOverlay);
         
         this._element.querySelector('.pictures__delete').removeEventListener('click', () => this._deleteCard());
         this._element.querySelector('.pictures__like').removeEventListener('click', () => this._likeCard());
