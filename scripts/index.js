@@ -36,16 +36,6 @@ const validationParams = {
     errorClass: '.popup__error'
 };
 
-// function openPopup(popup) {
-//     popup.classList.add('popup_opened');
-//     document.addEventListener('keydown', closePopupByEsc);
-// }
-
-// function closePopup(popup) {
-//     popup.classList.remove('popup_opened');
-//     document.removeEventListener('keydown', closePopupByEsc);
-// }
-
 function editFormSubmitHandler(event) {
     event.preventDefault(); 
     
@@ -53,41 +43,6 @@ function editFormSubmitHandler(event) {
     jobElement.textContent = jobInput.value;
     closePopup(editPopup);
 }
-
-// function deletePicturesElement(event) {
-//     const picturesElement = event.target.closest('.pictures__item');
-//     picturesElement.remove();
-// }
-
-// function likePicturesElement(event) {
-//     event.target.classList.toggle('pictures__like_active');
-// }
-
-// function showPopupPicturesElement(event) {
-//     const picturesElement = event.target.closest('.pictures__image');
-
-//     picturePopupImage.src = picturesElement.src;
-//     picturePopupCaption.textContent = picturesElement.alt;
-//     openPopup(picturePopup); 
-// }
-
-// function addPicturesElementListeners(picturesElement) {
-//     picturesElement.querySelector('.pictures__delete').addEventListener('click', deletePicturesElement);
-//     picturesElement.querySelector('.pictures__like').addEventListener('click', likePicturesElement);
-//     picturesElement.querySelector('.pictures__image').addEventListener('click', showPopupPicturesElement);
-// }
-
-// function createPicturesElement(newElement) {
-//     const picturesElement = picturesTemplateElement.content.cloneNode(true);
-//     const picturesImage = picturesElement.querySelector('.pictures__image');
-
-//     picturesElement.querySelector('.pictures__title').textContent = newElement.name;
-//     picturesImage.src = newElement.link;
-//     picturesImage.alt = newElement.name;
-//     addPicturesElementListeners(picturesElement);
-
-//     return picturesElement;
-// }
 
 function renderPicturesElement(element) {
     picturesListElement.prepend(element);
@@ -107,20 +62,11 @@ function addFormSubmitHandler(event) {
     renderPicturesElement(cardElement);
     closePopup(addPopup); 
 }
+const validAdd = new FormValidator(validationParams, addForm);
+const formAddValid = validAdd.enableValidation();
 
-// function closePopupByOverlay(event) {
-//     const currentPopup = document.querySelector('.popup_opened');
-//     if (currentPopup && event.target === event.currentTarget) { 
-//         closePopup(currentPopup); 
-//     }
-// }
-
-// function closePopupByEsc(event) {
-//     const currentPopup = document.querySelector('.popup_opened');
-//     if (currentPopup && event.key === 'Escape') { 
-//         closePopup(currentPopup);
-//     }
-// }
+const validEdit = new FormValidator(validationParams, editForm);
+const formEditValid = validEdit.enableValidation();
 
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
@@ -148,33 +94,9 @@ addPopupClose.addEventListener('click', () => closePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
-// picturePopupClose.addEventListener('click', () => closePopup(picturePopup)); 
-// popupElement.addEventListener('mousedown', closePopupByOverlay);
-
-// initialPicturesElements.forEach(item => {
-//     const element = createPicturesElement(item);
-//     renderPicturesElement(element);
-// });
-
-// enableValidation(validationParams);
-
 cardsList.forEach(item => {
     const card = new Card(item, '.pictures-template');
     const cardElement = card.generateCard();
 
     renderPicturesElement(cardElement);
 });
-
-const validAdd = new FormValidator(validationParams, addForm);
-const formAddValid = validAdd.enableValidation();
-
-const validEdit = new FormValidator(validationParams, editForm);
-const formEditValid = validEdit.enableValidation();
-
-// const formsList = Array.from(document.forms);
-// formsList.forEach(form => {
-//     const formClassNames = form.className;
-//     const formSelectors = formClassNames.split(' ');
-//     const valid = new FormValidator(validationParams, formSelectors[1]);
-    
-// })
