@@ -23,6 +23,7 @@ export const popupElement = document.querySelector('.popup_type_picture');
 export const popupImage = popupElement.querySelector('.popup__image');
 export const popupCloseButton = popupElement.querySelector('.popup__close');
 export const popupCaption = popupElement.querySelector('.popup__caption');
+const picturesTemplateSelector = '.pictures-template';
 const picturesListElement = document.querySelector('.pictures__list');
 
 const validationParams = {
@@ -56,7 +57,7 @@ function addFormSubmitHandler(event) {
         link: linkInput.value
     };
 
-    const userCard = new Card(newElement, '.pictures-template');
+    const userCard = new Card(newElement, picturesTemplateSelector);
     const cardElement = userCard.generateCard();
 
     renderPicturesElement(cardElement);
@@ -95,7 +96,7 @@ addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByOverlay);
 
 cardsList.forEach(item => {
-    const card = new Card(item, '.pictures-template');
+    const card = new Card(item, picturesTemplateSelector);
     const cardElement = card.generateCard();
 
     renderPicturesElement(cardElement);
