@@ -1,7 +1,7 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
 import { cardsList } from '../scripts/cards.js';
-import { openPopup, closePopup, closePopupByOverlay } from '../scripts/utils.js';
+import { openPopup, closePopup, closePopupByEscOrOverlay, popupElement } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -19,10 +19,6 @@ const addForm = addPopup.querySelector('.popup__form');
 const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
-export const popupElement = document.querySelector('.popup_type_picture');
-export const popupImage = popupElement.querySelector('.popup__image');
-export const popupCloseButton = popupElement.querySelector('.popup__close');
-export const popupCaption = popupElement.querySelector('.popup__caption');
 const picturesTemplateSelector = '.pictures-template';
 const picturesListElement = document.querySelector('.pictures__list');
 
@@ -64,10 +60,10 @@ function addFormSubmitHandler(event) {
     closePopup(addPopup); 
 }
 const validAdd = new FormValidator(validationParams, addForm);
-const formAddValid = validAdd.enableValidation();
+validAdd.enableValidation();
 
 const validEdit = new FormValidator(validationParams, editForm);
-const formEditValid = validEdit.enableValidation();
+validEdit.enableValidation();
 
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
@@ -83,7 +79,7 @@ editButton.addEventListener('click', () => {
 
 editPopupClose.addEventListener('click', () => closePopup(editPopup)); 
 editForm.addEventListener('submit', editFormSubmitHandler);
-editPopup.addEventListener('mousedown', closePopupByOverlay);
+editPopup.addEventListener('mousedown', closePopupByEscOrOverlay);
 
 addButton.addEventListener('click', () => {
     addForm.reset();
@@ -93,7 +89,9 @@ addButton.addEventListener('click', () => {
 
 addPopupClose.addEventListener('click', () => closePopup(addPopup)); 
 addForm.addEventListener('submit', addFormSubmitHandler);
-addPopup.addEventListener('mousedown', closePopupByOverlay);
+addPopup.addEventListener('mousedown', closePopupByEscOrOverlay);
+
+popupElement.addEventListener('mousedown', closePopupByEscOrOverlay);
 
 cardsList.forEach(item => {
     const card = new Card(item, picturesTemplateSelector);
