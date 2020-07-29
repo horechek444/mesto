@@ -1,7 +1,7 @@
 import Card from '../scripts/Card.js';
 import FormValidator from '../scripts/FormValidator.js';
 import { cardsList } from '../scripts/cards.js';
-import { openPopup, closePopup, closePopupByEscOrOverlay, popupElement } from '../scripts/utils.js';
+import { openPopup, closePopup, closePopupByEscOrOverlay, popupElement, popupImage, popupCaption, popupCloseButton } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -59,6 +59,14 @@ function addFormSubmitHandler(event) {
     renderPicturesElement(cardElement);
     closePopup(addPopup); 
 }
+
+function closePopupPicturesElement() {
+    popupImage.src = '';
+    popupImage.alt = '';
+    popupCaption.textContent = '';
+    closePopup(popupElement);
+}
+
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
@@ -91,6 +99,7 @@ addPopupClose.addEventListener('click', () => closePopup(addPopup));
 addForm.addEventListener('submit', addFormSubmitHandler);
 addPopup.addEventListener('mousedown', closePopupByEscOrOverlay);
 
+popupCloseButton.addEventListener('click', closePopupPicturesElement);
 popupElement.addEventListener('mousedown', closePopupByEscOrOverlay);
 
 cardsList.forEach(item => {
