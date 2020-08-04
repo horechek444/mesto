@@ -1,9 +1,9 @@
-import Kaliningrad from './images/kaliningrad.jpg';
-import Sakha from './images/sakha.jpg';
-import Vladivostok from './images/vladivostok.jpg';
-import Kamchatka from './images/kamchatka.jpg';
-import Siberia from './images/siberia.jpg';
-import Klin from './images/klin.jpg';
+import Kaliningrad from '../images/kaliningrad.jpg';
+import Sakha from '../images/sakha.jpg';
+import Vladivostok from '../images/vladivostok.jpg';
+import Kamchatka from '../images/kamchatka.jpg';
+import Siberia from '../images/siberia.jpg';
+import Klin from '../images/klin.jpg';
 
 export const cardsList = [
     {
