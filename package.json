@@ -2,7 +2,7 @@
   "name": "mesto",
   "version": "1.0.0",
   "description": "### Обзор",
-  "main": ".eslintrc.js",
+  "main": "index.js",
   "scripts": {
     "build": "rm -rf dist && webpack",
     "dev": "webpack-dev-server --open --watch"
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/horechek444/mesto.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tatiana Eskina",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/horechek444/mesto/issues"

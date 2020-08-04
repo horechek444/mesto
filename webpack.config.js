@@ -16,14 +16,6 @@ module.exports = {
                 exclude: '/node_modules/',
             },
             {
-                test: /\.(png|svg|jpg|gif|woff2)$/,
-                loader: 'file-loader',
-            },
-            {
-                test: /\.html$/,
-                loader: 'html-loader',
-            },
-            {
                 test: /\.css$/,
                 loader: [
                     MiniCssExtractPlugin.loader,
@@ -34,12 +26,15 @@ module.exports = {
                     'postcss-loader',
                 ],
             },
+            {
+                test: /\.html$/,
+                loader: 'html-loader',
+            },
+            {
+                test: /\.(png|svg|jpg|gif|woff|woff2)$/,
+                loader: 'file-loader',
+            },
         ],
-    },
-    devServer: {
-        host: '127.0.0.1',
-        port: 8080,
-        disableHostCheck: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -47,4 +42,9 @@ module.exports = {
         }),
         new MiniCssExtractPlugin(),
     ],
+    devServer: {
+        host: '127.0.0.1',
+        port: 8080,
+        disableHostCheck: true,
+    },
 };

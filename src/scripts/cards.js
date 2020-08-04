@@ -1,26 +1,33 @@
+import Kaliningrad from '../images/kaliningrad.jpg';
+import Sakha from '../images/sakha.jpg';
+import Vladivostok from '../images/vladivostok.jpg';
+import Kamchatka from '../images/kamchatka.jpg';
+import Siberia from '../images/siberia.jpg';
+import Klin from '../images/klin.jpg';
+
 export const cardsList = [
     {
         name: 'Калининград',
-        link: './images/kaliningrad.jpg'
+        link: Kaliningrad
     },
     {
         name: 'Саха',
-        link: './images/sakha.jpg'
+        link: Sakha
     },
     {
         name: 'Владивосток',
-        link: './images/vladivostok.jpg'
+        link: Vladivostok
     },
     {
         name: 'Камчатка',
-        link: './images/kamchatka.jpg'
+        link: Kamchatka
     },
     {
         name: 'Сибирь',
-        link: './images/siberia.jpg'
+        link: Siberia
     },
     {
         name: 'Клин',
-        link: './images/klin.jpg'
+        link: Klin
     }
 ];
