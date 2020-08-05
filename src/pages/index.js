@@ -1,7 +1,8 @@
 import './index.css';
 import Card from '../scripts/Card.js';
+import Section from '../scripts/Section.js';
 import FormValidator from '../scripts/FormValidator.js';
-import { cardsList } from '../scripts/cards.js';
+import { cardsArray } from '../scripts/cards.js';
 import { openPopup, closePopup, closePopupByEscOrOverlay, popupElement, popupImage, popupCaption, popupCloseButton } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
@@ -42,10 +43,6 @@ function editFormSubmitHandler(event) {
     closePopup(editPopup);
 }
 
-function renderPicturesElement(element) {
-    picturesListElement.prepend(element);
-}
-
 function addFormSubmitHandler(event) {
     event.preventDefault();
 
@@ -57,7 +54,7 @@ function addFormSubmitHandler(event) {
     const userCard = new Card(newElement, picturesTemplateSelector);
     const cardElement = userCard.generateCard();
 
-    renderPicturesElement(cardElement);
+    cardsList.setItem(cardElement);
     closePopup(addPopup); 
 }
 
@@ -103,9 +100,14 @@ addPopup.addEventListener('mousedown', closePopupByEscOrOverlay);
 popupCloseButton.addEventListener('click', closePopupPicturesElement);
 popupElement.addEventListener('mousedown', closePopupByEscOrOverlay);
 
-cardsList.forEach(item => {
-    const card = new Card(item, picturesTemplateSelector);
-    const cardElement = card.generateCard();
+const cardsList = new Section({
+    data: cardsArray,
+    renderer: (item) => {
+        const card = new Card(item, picturesTemplateSelector);
+        const cardElement = card.generateCard();
+        
+        cardsList.setItem(cardElement);
+    },
+}, picturesListElement)
 
-    renderPicturesElement(cardElement);
-});
+cardsList.renderItems();

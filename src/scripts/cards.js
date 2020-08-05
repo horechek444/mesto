@@ -5,7 +5,7 @@ import Kamchatka from '../images/kamchatka.jpg';
 import Siberia from '../images/siberia.jpg';
 import Klin from '../images/klin.jpg';
 
-export const cardsList = [
+export const cardsArray = [
     {
         name: 'Калининград',
         link: Kaliningrad
