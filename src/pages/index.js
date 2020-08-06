@@ -22,7 +22,6 @@ const titleInput = addForm.querySelector('.popup__input_type_title');
 const linkInput = addForm.querySelector('.popup__input_type_link');
 
 const picturesTemplateSelector = '.pictures-template';
-const picturesListElement = document.querySelector('.pictures__list');
 
 const validationParams = {
     formElement: '.popup__form',
@@ -54,7 +53,7 @@ function addFormSubmitHandler(event) {
     const userCard = new Card(newElement, picturesTemplateSelector);
     const cardElement = userCard.generateCard();
 
-    cardsList.setItem(cardElement);
+    cardsList.addItem(cardElement);
     closePopup(addPopup); 
 }
 
@@ -101,13 +100,13 @@ popupCloseButton.addEventListener('click', closePopupPicturesElement);
 popupElement.addEventListener('mousedown', closePopupByEscOrOverlay);
 
 const cardsList = new Section({
-    data: cardsArray,
+    items: cardsArray,
     renderer: (item) => {
         const card = new Card(item, picturesTemplateSelector);
         const cardElement = card.generateCard();
         
-        cardsList.setItem(cardElement);
+        cardsList.addItem(cardElement);
     },
-}, picturesListElement)
+}, '.pictures__list')
 
 cardsList.renderItems();
