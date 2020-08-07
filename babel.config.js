@@ -11,4 +11,9 @@ const presets = [
     }],
 ];
 
+const plugins = [
+    ['transform-class-properties', { 'spec': true }],
+];
+
 module.exports = { presets };
+module.exports = { plugins };
