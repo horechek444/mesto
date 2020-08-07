@@ -2,9 +2,9 @@ import './index.css';
 import Card from '../scripts/Card.js';
 import Section from '../scripts/Section.js';
 import Popup from '../scripts/Popup.js';
+import PopupWithImage from '../scripts/PopupWithImage.js';
 import FormValidator from '../scripts/FormValidator.js';
 import { cardsArray } from '../scripts/cards.js';
-import { closePopupByEscOrOverlay, popupElement, popupImage, popupCaption, popupCloseButton } from '../scripts/utils.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
@@ -56,13 +56,6 @@ function addFormSubmitHandler(event) {
     addPopupNew.close(); 
 }
 
-function closePopupPicturesElement() {
-    popupImage.src = '';
-    popupImage.alt = '';
-    popupCaption.textContent = '';
-    popupElement.close();
-}
-
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
@@ -91,15 +84,12 @@ addButton.addEventListener('click', () => {
 
 addForm.addEventListener('submit', addFormSubmitHandler);
 
-popupCloseButton.addEventListener('click', closePopupPicturesElement);
-popupElement.addEventListener('mousedown', closePopupByEscOrOverlay);
-
 const cardsList = new Section({
     items: cardsArray,
     renderer: (item) => {
         const card = new Card(item, picturesTemplateSelector);
         const cardElement = card.generateCard();
-        
+        cardElement.addEventListener('click', () => popupPictureNew.open());
         cardsList.addItem(cardElement);
     },
 }, '.pictures__list')
@@ -111,3 +101,6 @@ editPopupNew.setEventListeners();
 
 const addPopupNew = new Popup('.popup_type_add');
 addPopupNew.setEventListeners();
+
+const popupPictureNew = new PopupWithImage('.popup_type_picture');
+popupPictureNew.setEventListeners();
