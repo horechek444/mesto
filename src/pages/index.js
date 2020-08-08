@@ -74,7 +74,7 @@ editButton.addEventListener('click', () => {
     editPopupNew.open(); 
 });
 
-editForm.addEventListener('submit', editFormSubmitHandler);
+editForm.addEventListener('submit', editFormSubmitHandler); // submitEditFormCallback
 
 addButton.addEventListener('click', () => {
     addForm.reset();
@@ -82,7 +82,7 @@ addButton.addEventListener('click', () => {
     addPopupNew.open();
 });
 
-addForm.addEventListener('submit', addFormSubmitHandler);
+addForm.addEventListener('submit', addFormSubmitHandler); // submitAddFormCallback
 
 const cardsList = new Section({
     items: cardsArray,
