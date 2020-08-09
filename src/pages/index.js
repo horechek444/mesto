@@ -3,6 +3,7 @@ import Card from '../scripts/Card.js';
 import Section from '../scripts/Section.js';
 import Popup from '../scripts/Popup.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
+import PopupWIthForm from '../scripts/PopupWithForm.js';;
 import FormValidator from '../scripts/FormValidator.js';
 import { cardsArray } from '../scripts/cards.js';
 
@@ -45,20 +46,20 @@ function editFormSubmitHandler(event) {
     editPopupNew.close();
 }
 
-function addFormSubmitHandler(event) {
-    event.preventDefault();
+// function addFormSubmitHandler(event) {
+//     event.preventDefault();
 
-    const newElement = {
-        name: titleInput.value,
-        link: linkInput.value
-    };
+//     const newElement = {
+//         name: titleInput.value,
+//         link: linkInput.value
+//     };
 
-    const userCard = new Card(newElement, picturesTemplateSelector);
-    const cardElement = userCard.generateCard();
+//     const userCard = new Card(newElement, picturesTemplateSelector);
+//     const cardElement = userCard.generateCard();
 
-    cardsList.addItem(cardElement);
-    addPopupNew.close(); 
-}
+//     cardsList.addItem(cardElement);
+//     addPopupNew.close(); 
+// }
 
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
@@ -86,7 +87,7 @@ addButton.addEventListener('click', () => {
     addPopupNew.open();
 });
 
-addForm.addEventListener('submit', addFormSubmitHandler); // submitAddFormCallback
+// addForm.addEventListener('submit', addFormSubmitHandler); // submitAddFormCallback
 
 const popupPictureNew = new PopupWithImage('.popup_type_picture');
 popupPictureNew.setEventListeners();
@@ -105,5 +106,14 @@ cardsList.renderItems();
 const editPopupNew = new Popup('.popup_type_edit');
 editPopupNew.setEventListeners();
 
-const addPopupNew = new Popup('.popup_type_add');
+const addPopupNew = new PopupWIthForm({
+    popupSelector: '.popup_type_add',
+    handleFormSubmit: (item) => {
+        const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
+        const cardElement = userCard.generateCard();
+        cardsList.addItem(cardElement);
+        addPopupNew.close();
+    }
+});
+
 addPopupNew.setEventListeners();
