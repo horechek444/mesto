@@ -33,6 +33,10 @@ const validationParams = {
     errorClass: '.popup__error'
 };
 
+function handleCardClick() {
+    popupPictureNew.open();
+}
+
 function editFormSubmitHandler(event) {
     event.preventDefault(); 
     
@@ -84,12 +88,14 @@ addButton.addEventListener('click', () => {
 
 addForm.addEventListener('submit', addFormSubmitHandler); // submitAddFormCallback
 
+const popupPictureNew = new PopupWithImage('.popup_type_picture');
+popupPictureNew.setEventListeners();
+
 const cardsList = new Section({
     items: cardsArray,
     renderer: (item) => {
-        const card = new Card(item, picturesTemplateSelector);
+        const card = new Card(item, handleCardClick, picturesTemplateSelector);
         const cardElement = card.generateCard();
-        cardElement.addEventListener('click', () => popupPictureNew.open());
         cardsList.addItem(cardElement);
     },
 }, '.pictures__list')
@@ -101,6 +107,3 @@ editPopupNew.setEventListeners();
 
 const addPopupNew = new Popup('.popup_type_add');
 addPopupNew.setEventListeners();
-
-const popupPictureNew = new PopupWithImage('.popup_type_picture');
-popupPictureNew.setEventListeners();
