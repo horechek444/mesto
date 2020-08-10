@@ -84,8 +84,8 @@ const cardsList = new Section({
 
 cardsList.renderItems();
 
-// const user = new UserInfo('.profile__title', '.profile__subtitle');
-// const userInfo = user.getUserInfo();
+const user = new UserInfo({ userNameSelector: '.profile__title', userInfoSelector: '.profile__subtitle' });
+const userInfo = user.getUserInfo();
 
 const editPopupNew = new PopupWIthForm({
     popupSelector: '.popup_type_edit',
@@ -95,13 +95,14 @@ const editPopupNew = new PopupWIthForm({
         editPopupNew.close();
     }
 });
+console.log(editPopupNew._getInputValues());
 editPopupNew.setEventListeners();
 
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
 
-    nameInput.value = nameElement.textContent; //get
-    jobInput.value = jobElement.textContent;
+    nameInput.value = userInfo.user;
+    jobInput.value = userInfo.info;
 
     nameInput.dispatchEvent(new Event('input'));
     jobInput.dispatchEvent(new Event('input'));
