@@ -82,7 +82,7 @@ editButton.addEventListener('click', () => {
 editForm.addEventListener('submit', editFormSubmitHandler); // submitEditFormCallback
 
 addButton.addEventListener('click', () => {
-    addForm.reset();
+    // addForm.reset();
     validAdd.updateErrorsAndButtonState(addForm);
     addPopupNew.open();
 });
@@ -91,6 +91,18 @@ addButton.addEventListener('click', () => {
 
 const popupPictureNew = new PopupWithImage('.popup_type_picture');
 popupPictureNew.setEventListeners();
+
+const addPopupNew = new PopupWIthForm({
+    popupSelector: '.popup_type_add',
+    handleFormSubmit: (item) => {
+        const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
+        const cardElement = userCard.generateCard();
+        cardsList.addItem(cardElement);
+        addPopupNew.close();
+    }
+});
+
+addPopupNew.setEventListeners();
 
 const cardsList = new Section({
     items: cardsArray,
@@ -105,15 +117,3 @@ cardsList.renderItems();
 
 const editPopupNew = new Popup('.popup_type_edit');
 editPopupNew.setEventListeners();
-
-const addPopupNew = new PopupWIthForm({
-    popupSelector: '.popup_type_add',
-    handleFormSubmit: (item) => {
-        const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
-        const cardElement = userCard.generateCard();
-        cardsList.addItem(cardElement);
-        addPopupNew.close();
-    }
-});
-
-addPopupNew.setEventListeners();
