@@ -18,8 +18,6 @@ const jobElement = document.querySelector('.profile__subtitle');
 const addButton = document.querySelector('.button_add');
 const addPopup = document.querySelector('.popup_type_add');
 const addForm = addPopup.querySelector('.popup__form');
-const titleInput = addForm.querySelector('.popup__input_type_title');
-const linkInput = addForm.querySelector('.popup__input_type_link');
 
 const picturesTemplateSelector = '.pictures-template';
 
@@ -41,25 +39,10 @@ function handleCardClick() {
 function editFormSubmitHandler(event) {
     event.preventDefault(); 
     
-    nameElement.textContent = nameInput.value;
+    nameElement.textContent = nameInput.value; //set
     jobElement.textContent = jobInput.value;
     editPopupNew.close();
 }
-
-// function addFormSubmitHandler(event) {
-//     event.preventDefault();
-
-//     const newElement = {
-//         name: titleInput.value,
-//         link: linkInput.value
-//     };
-
-//     const userCard = new Card(newElement, picturesTemplateSelector);
-//     const cardElement = userCard.generateCard();
-
-//     cardsList.addItem(cardElement);
-//     addPopupNew.close(); 
-// }
 
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
@@ -70,7 +53,7 @@ validEdit.enableValidation();
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
 
-    nameInput.value = nameElement.textContent;
+    nameInput.value = nameElement.textContent; //get
     jobInput.value = jobElement.textContent;
 
     nameInput.dispatchEvent(new Event('input'));
@@ -82,12 +65,9 @@ editButton.addEventListener('click', () => {
 editForm.addEventListener('submit', editFormSubmitHandler); // submitEditFormCallback
 
 addButton.addEventListener('click', () => {
-    // addForm.reset();
     validAdd.updateErrorsAndButtonState(addForm);
     addPopupNew.open();
 });
-
-// addForm.addEventListener('submit', addFormSubmitHandler); // submitAddFormCallback
 
 const popupPictureNew = new PopupWithImage('.popup_type_picture');
 popupPictureNew.setEventListeners();
