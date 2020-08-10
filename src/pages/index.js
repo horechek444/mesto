@@ -5,6 +5,7 @@ import Popup from '../scripts/Popup.js';
 import PopupWithImage from '../scripts/PopupWithImage.js';
 import PopupWIthForm from '../scripts/PopupWithForm.js';;
 import FormValidator from '../scripts/FormValidator.js';
+import UserInfo from '../scripts/UserInfo.js';
 import { cardsArray } from '../scripts/cards.js';
 
 const editButton = document.querySelector('.profile__button');
@@ -36,13 +37,13 @@ function handleCardClick() {
     popupPictureNew.open();
 }
 
-function editFormSubmitHandler(event) {
-    event.preventDefault(); 
+// function editFormSubmitHandler(event) {
+//     event.preventDefault(); 
     
-    nameElement.textContent = nameInput.value; //set
-    jobElement.textContent = jobInput.value;
-    editPopupNew.close();
-}
+//     nameElement.textContent = nameInput.value; //set
+//     jobElement.textContent = jobInput.value;
+//     editPopupNew.close();
+// }
 
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
@@ -50,19 +51,7 @@ validAdd.enableValidation();
 const validEdit = new FormValidator(validationParams, editForm);
 validEdit.enableValidation();
 
-editButton.addEventListener('click', () => {
-    validEdit.updateErrorsAndButtonState(editForm);
-
-    nameInput.value = nameElement.textContent; //get
-    jobInput.value = jobElement.textContent;
-
-    nameInput.dispatchEvent(new Event('input'));
-    jobInput.dispatchEvent(new Event('input'));
-
-    editPopupNew.open(); 
-});
-
-editForm.addEventListener('submit', editFormSubmitHandler); // submitEditFormCallback
+// editForm.addEventListener('submit', editFormSubmitHandler); // submitEditFormCallback
 
 addButton.addEventListener('click', () => {
     validAdd.updateErrorsAndButtonState(addForm);
@@ -95,5 +84,27 @@ const cardsList = new Section({
 
 cardsList.renderItems();
 
-const editPopupNew = new Popup('.popup_type_edit');
+// const user = new UserInfo('.profile__title', '.profile__subtitle');
+// const userInfo = user.getUserInfo();
+
+const editPopupNew = new PopupWIthForm({
+    popupSelector: '.popup_type_edit',
+    handleFormSubmit: (item) => {
+        nameElement.textContent = item.user;
+        jobElement.textContent = item.info;
+        editPopupNew.close();
+    }
+});
 editPopupNew.setEventListeners();
+
+editButton.addEventListener('click', () => {
+    validEdit.updateErrorsAndButtonState(editForm);
+
+    nameInput.value = nameElement.textContent; //get
+    jobInput.value = jobElement.textContent;
+
+    nameInput.dispatchEvent(new Event('input'));
+    jobInput.dispatchEvent(new Event('input'));
+
+    editPopupNew.open(); 
+});
