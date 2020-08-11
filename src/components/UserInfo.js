@@ -12,7 +12,7 @@ export default class UserInfo {
     }
 
     setUserInfo(data) {
-        this.getUserInfo();
-
+        this._userNameElement.textContent = data.user;
+        this._userInfoElement.textContent = data.info;
     }
 }

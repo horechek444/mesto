@@ -1,20 +1,17 @@
 import './index.css';
-import Card from '../scripts/Card.js';
-import Section from '../scripts/Section.js';
-import Popup from '../scripts/Popup.js';
-import PopupWithImage from '../scripts/PopupWithImage.js';
-import PopupWIthForm from '../scripts/PopupWithForm.js';;
-import FormValidator from '../scripts/FormValidator.js';
-import UserInfo from '../scripts/UserInfo.js';
-import { cardsArray } from '../scripts/cards.js';
+import Card from '../components/Card.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWIthForm from '../components/PopupWithForm.js';;
+import FormValidator from '../components/FormValidator.js';
+import UserInfo from '../components/UserInfo.js';
+import { cardsArray } from '../utils/cards.js';
 
 const editButton = document.querySelector('.profile__button');
 const editPopup = document.querySelector('.popup_type_edit');
 const editForm = editPopup.querySelector('.popup__form');
 const nameInput = editForm.querySelector('.popup__input_type_name');
 const jobInput = editForm.querySelector('.popup__input_type_about');
-const nameElement = document.querySelector('.profile__title');
-const jobElement = document.querySelector('.profile__subtitle');
 
 const addButton = document.querySelector('.button_add');
 const addPopup = document.querySelector('.popup_type_add');
@@ -34,44 +31,19 @@ const validationParams = {
 };
 
 function handleCardClick() {
-    popupPictureNew.open();
+    popupTypePicture.open();
 }
-
-// function editFormSubmitHandler(event) {
-//     event.preventDefault(); 
-    
-//     nameElement.textContent = nameInput.value; //set
-//     jobElement.textContent = jobInput.value;
-//     editPopupNew.close();
-// }
-
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
 const validEdit = new FormValidator(validationParams, editForm);
 validEdit.enableValidation();
 
-// editForm.addEventListener('submit', editFormSubmitHandler); // submitEditFormCallback
+const popupTypePicture = new PopupWithImage('.popup_type_picture');
+popupTypePicture.setEventListeners();
 
-addButton.addEventListener('click', () => {
-    validAdd.updateErrorsAndButtonState(addForm);
-    addPopupNew.open();
-});
-
-const popupPictureNew = new PopupWithImage('.popup_type_picture');
-popupPictureNew.setEventListeners();
-
-const addPopupNew = new PopupWIthForm({
-    popupSelector: '.popup_type_add',
-    handleFormSubmit: (item) => {
-        const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
-        const cardElement = userCard.generateCard();
-        cardsList.addItem(cardElement);
-        addPopupNew.close();
-    }
-});
-
-addPopupNew.setEventListeners();
+const user = new UserInfo({ userNameSelector: '.profile__title', userInfoSelector: '.profile__subtitle' });
+const userInfo = user.getUserInfo();
 
 const cardsList = new Section({
     items: cardsArray,
@@ -84,19 +56,27 @@ const cardsList = new Section({
 
 cardsList.renderItems();
 
-const user = new UserInfo({ userNameSelector: '.profile__title', userInfoSelector: '.profile__subtitle' });
-const userInfo = user.getUserInfo();
-
-const editPopupNew = new PopupWIthForm({
-    popupSelector: '.popup_type_edit',
+const popupTypeAdd = new PopupWIthForm({
+    popupSelector: '.popup_type_add',
     handleFormSubmit: (item) => {
-        nameElement.textContent = item.user;
-        jobElement.textContent = item.info;
-        editPopupNew.close();
+        const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
+        const cardElement = userCard.generateCard();
+        cardsList.addItem(cardElement);
+        popupTypeAdd.close();
     }
 });
-console.log(editPopupNew._getInputValues());
-editPopupNew.setEventListeners();
+
+popupTypeAdd.setEventListeners();
+
+const popupTypeEdit = new PopupWIthForm({
+    popupSelector: '.popup_type_edit',
+    handleFormSubmit: (item) => {
+        user.setUserInfo(item);
+        popupTypeEdit.close();
+    }
+});
+
+popupTypeEdit.setEventListeners();
 
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
@@ -107,5 +87,10 @@ editButton.addEventListener('click', () => {
     nameInput.dispatchEvent(new Event('input'));
     jobInput.dispatchEvent(new Event('input'));
 
-    editPopupNew.open(); 
+    popupTypeEdit.open(); 
+});
+
+addButton.addEventListener('click', () => {
+    validAdd.updateErrorsAndButtonState(addForm);
+    popupTypeAdd.open();
 });

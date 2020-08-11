@@ -1,4 +1,4 @@
-import Kaliningrad from '../images/kaliningrad.jpg';
+import Kaliningrad from '../images/Kaliningrad.jpg';
 import Sakha from '../images/sakha.jpg';
 import Vladivostok from '../images/vladivostok.jpg';
 import Kamchatka from '../images/kamchatka.jpg';
