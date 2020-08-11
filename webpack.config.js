@@ -41,6 +41,9 @@ module.exports = {
             template: './src/index.html',
         }),
         new MiniCssExtractPlugin(),
+        // new webpack.LoaderOptionsPlugin({
+        //     debug: true,
+        // }),      
     ],
     devServer: {
         host: '127.0.0.1',
