@@ -6,18 +6,7 @@ import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
 import { cardsArray } from '../utils/cards.js';
-
-const editButton = document.querySelector('.profile__button');
-const editPopup = document.querySelector('.popup_type_edit');
-const editForm = editPopup.querySelector('.popup__form');
-const nameInput = editForm.querySelector('.popup__input_type_name');
-const jobInput = editForm.querySelector('.popup__input_type_about');
-
-const addButton = document.querySelector('.button_add');
-const addPopup = document.querySelector('.popup_type_add');
-const addForm = addPopup.querySelector('.popup__form');
-
-const picturesTemplateSelector = '.pictures-template';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector } from '../utils/variables.js';
 
 const validationParams = {
     formElement: '.popup__form',
