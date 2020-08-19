@@ -8,6 +8,8 @@ import UserInfo from '../components/UserInfo.js';
 import { cardsArray } from '../utils/cards.js';
 import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector } from '../utils/variables.js';
 
+const popupTypeAvatar = document.querySelector('.popup_type_avatar');
+
 const validationParams = {
     formElement: '.popup__form',
     inputElement: '.popup__input',
@@ -66,6 +68,16 @@ const popupTypeEdit = new PopupWIthForm({
 });
 
 popupTypeEdit.setEventListeners();
+
+const popupTypeAvatar = new PopupWIthForm(
+    popupSelector: '.popup_type_avatar',
+    handleFormSubmit: (item) => {
+        item; // объект
+        popupTypeAvatar.close();
+    }
+);
+
+popupTypeAvatar.setEventListeners();
 
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);

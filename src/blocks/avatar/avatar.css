@@ -36,10 +36,7 @@
     height: 100%;
 }
 
-.avatar:hover::before {
-    visibility: visible;
-}
-
+.avatar:hover::before, 
 .avatar:hover::after {
     visibility: visible;
 }
