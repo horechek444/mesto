@@ -28,13 +28,13 @@ export default class Card {
         this._element.querySelector('.pictures__like').classList.toggle('pictures__like_active');
     }
 
-    _deleteCard() {
-        this._element.remove();
-        this._element = null;
-    }
+    // _deleteCard() {
+    //     this._element.remove();
+    //     this._element = null;
+    // }
 
     _setEventListeners() {
-        this._element.querySelector('.pictures__delete').addEventListener('click', () => this._deleteCard());
+        // this._element.querySelector('.pictures__delete').addEventListener('click', () => this._deleteCard());
         this._element.querySelector('.pictures__like').addEventListener('click', () => this._likeCard());
         this._element.querySelector('.pictures__image').addEventListener('click', () => this._handleCardClick());
     }

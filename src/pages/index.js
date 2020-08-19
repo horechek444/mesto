@@ -6,10 +6,8 @@ import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
 import { cardsArray } from '../utils/cards.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, deleteElement } from '../utils/variables.js';
 import Popup from '../components/Popup';
-
-
 
 const validationParams = {
     formElement: '.popup__form',
@@ -61,6 +59,7 @@ const popupTypeAdd = new PopupWIthForm({
     handleFormSubmit: (item) => {
         const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
         const cardElement = userCard.generateCard();
+        cardElement.prepend(deleteElement);
         cardsList.addItem(cardElement);
         popupTypeAdd.close();
     }
@@ -112,3 +111,5 @@ avatarImg.addEventListener('click', () => {
     validAvatar.updateErrorsAndButtonState(avatarForm);
     popupTypeAvatar.open();
 });
+
+deleteElement.addEventListener('click', () => handleCardDelete());

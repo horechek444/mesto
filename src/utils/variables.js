@@ -11,3 +11,7 @@ export const picturesTemplateSelector = '.pictures-template';
 export const avatarImg = document.querySelector('.avatar');
 const popupAvatar = document.querySelector('.popup_type_avatar');
 export const avatarForm = popupAvatar.querySelector('.popup__form');
+
+export const deleteElement = document.createElement('button');
+deleteElement.className = 'button pictures__delete opacity';
+deleteElement.type = 'button';
