@@ -1,5 +1,45 @@
 .avatar {
-    max-width: 120px;
-    max-height: 120px;
+    position: relative;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
+    cursor: pointer;
+    background-image: url('../../images/avatar.jpg');
+    background-position: center;
+    background-size: contain;
+    z-index: 1;
+}
+
+.avatar::before {
+    visibility: hidden;
+    content: '';
+    background-image: url('../../images/pen.svg');
+    position: absolute;
+    top: calc(50% - 13px);
+    left: calc(50% - 13px);
+    z-index: 3;
+    width: 26px;
+    height: 26px;
+}
+
+.avatar::after {
+    visibility: hidden;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.avatar:hover::before {
+    visibility: visible;
+}
+
+.avatar:hover::after {
+    visibility: visible;
 }

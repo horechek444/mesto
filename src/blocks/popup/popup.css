@@ -17,6 +17,7 @@
 @import url('./__input/_type/popup__input_type_error.css');
 @import url('./__error/popup__error.css');
 @import url('./__control/popup__control.css');
+@import url('./__cover/_type/popup__cover_type_avatar.css');
 
 .popup {
     display: flex;
