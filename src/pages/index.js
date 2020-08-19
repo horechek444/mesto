@@ -6,9 +6,10 @@ import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
 import { cardsArray } from '../utils/cards.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm } from '../utils/variables.js';
+import Popup from '../components/Popup';
 
-const popupTypeAvatar = document.querySelector('.popup_type_avatar');
+
 
 const validationParams = {
     formElement: '.popup__form',
@@ -24,11 +25,19 @@ const validationParams = {
 function handleCardClick() {
     popupTypePicture.open();
 }
+
+function handleCardDelete() {
+    popupTypePrevent.open();
+}
+
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
 const validEdit = new FormValidator(validationParams, editForm);
 validEdit.enableValidation();
+
+const validAvatar = new FormValidator(validationParams, avatarForm);
+validAvatar.enableValidation();
 
 const popupTypePicture = new PopupWithImage('.popup_type_picture');
 popupTypePicture.setEventListeners();
@@ -69,15 +78,18 @@ const popupTypeEdit = new PopupWIthForm({
 
 popupTypeEdit.setEventListeners();
 
-const popupTypeAvatar = new PopupWIthForm(
+const popupTypeAvatar = new PopupWIthForm({
     popupSelector: '.popup_type_avatar',
     handleFormSubmit: (item) => {
-        item; // объект
+        avatarImg.style.backgroundImage = `url(${item.avatar})`;
         popupTypeAvatar.close();
     }
-);
+});
 
 popupTypeAvatar.setEventListeners();
+
+const popupTypePrevent = new Popup('.popup_type_prevent');
+popupTypePrevent.setEventListeners();
 
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
@@ -94,4 +106,9 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => {
     validAdd.updateErrorsAndButtonState(addForm);
     popupTypeAdd.open();
+});
+
+avatarImg.addEventListener('click', () => {
+    validAvatar.updateErrorsAndButtonState(avatarForm);
+    popupTypeAvatar.open();
 });
