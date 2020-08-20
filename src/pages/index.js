@@ -24,7 +24,7 @@ function handleCardClick() {
     popupTypePicture.open();
 }
 
-function handleCardDelete() {
+function handleCardPrevent() {
     popupTypePrevent.open();
 }
 
@@ -112,4 +112,4 @@ avatarImg.addEventListener('click', () => {
     popupTypeAvatar.open();
 });
 
-deleteElement.addEventListener('click', () => handleCardDelete());
+deleteElement.addEventListener('click', () => handleCardPrevent());

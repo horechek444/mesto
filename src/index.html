@@ -93,7 +93,9 @@
             <div class="popup__container">
                 <button class="button popup__close opacity" type="button"></button>
                 <h2 class="popup__title">Вы уверены?</h2>
-                <input class="button popup__submit" type="submit" value="Да" name="submit">
+                <form class="popup__form form_type_prevent" action="#" name="prevent-form" novalidate>
+                    <input class="button popup__submit" type="submit" value="Да" name="submit">
+                </form>
             </div>
         </section>
 
