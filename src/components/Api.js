@@ -1,35 +1,39 @@
-class Api {
-    constructor() {
-
+export default class Api {
+    constructor({ baseUrl, headers }) {
+        this.baseUrl = baseUrl;
+        this.headers = headers;
     }
 
-    getUserInfo() {
-        fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
-            headers: {
-                authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
-            },
+    getInfo() {  // 'https://mesto.nomoreparties.co/v1/cohort-14/users/me', '015c5709-d89c-4f94-866c-ab8c6888fc92'
+        return fetch(this.baseUrl, { 
+            headers: this.headers,
         })
-    
         .then(res => res.json())
-        .then((result) => {
-            console.log(result);
-        });
+        // .then((result) => {
+        //     console.log(result);
+        // });
+
+        // .catch((err) => {
+        //     console.log(`Ошибка: ${err}`);
+        // });
     }
 
-    getInitialCards() {
-        fetch('https://mesto.nomoreparties.co/v1/cohort-14/cards', {
-            headers: {
-                authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
-            },
+    getInitialCards() {  //'https://mesto.nomoreparties.co/v1/cohort-14/cards'
+        return fetch(this.baseUrl, { 
+            headers: this.headers,
         })
 
         .then(res => res.json())
-        .then((result) => {
-            console.log(result);
-        });
+        // .then((result) => {
+        //     console.log(result);
+        // })
+
+        // .catch((err) => {
+        //     console.log(`Ошибка: ${err}`);
+        // });
     }
 
-    profileEdit(newProfile) {
+    setUserInfo(newProfile) {
         fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
             method: 'PATCH',
             headers: {
@@ -45,10 +49,14 @@ class Api {
         .then(res => res.json())
         .then((result) => {
             console.log(result);
+        })
+        
+        .catch((err) => {
+            console.log(`Ошибка: ${err}`);
         });
     }
 
-    cardAdd(newCard) {
+    createCard(newCard) {
         fetch('https://mesto.nomoreparties.co/v1/cohort-14/cards', {
             method: 'POST',
             headers: {
@@ -64,6 +72,10 @@ class Api {
         .then(res => res.json())
         .then((result) => {
             console.log(result);
+        })
+        
+        .catch((err) => {
+            console.log(`Ошибка: ${err}`);
         });
     }
 
@@ -80,7 +92,7 @@ class Api {
         });
     }
 
-    cardDelete(card) { // узнать ID карточки, подставить в URL и удалить ее из списка карточек
+    deleteCard(card) { // узнать ID карточки, подставить в URL и удалить ее из списка карточек
         fetch('https://mesto.nomoreparties.co/v1/cohortId/cards/cardId', {
             method: 'DELETE',
             headers: {
@@ -94,10 +106,14 @@ class Api {
         .then(res => res.json())
         .then((result) => {
             console.log(result);
+        })
+        
+        .catch((err) => {
+            console.log(`Ошибка: ${err}`);
         });
     }
 
-    cardLike(card) {
+    likeCard(card) {
         fetch('https://mesto.nomoreparties.co/v1/cohortId/cards/likes/cardId', {
             method: 'PUT',
             headers: {
@@ -111,10 +127,14 @@ class Api {
         .then(res => res.json())
         .then((result) => {
             console.log(result);
+        })
+        
+        .catch((err) => {
+            console.log(`Ошибка: ${err}`);
         });
     }
 
-    cardDislike(card) {
+    dislikeCard(card) {
         fetch('https://mesto.nomoreparties.co/v1/cohortId/cards/likes/cardId', {
             method: 'DELETE',
             headers: {
@@ -128,6 +148,10 @@ class Api {
         .then(res => res.json())
         .then((result) => {
             console.log(result);
+        })
+        
+        .catch((err) => {
+            console.log(`Ошибка: ${err}`);
         });
     }
 
@@ -145,6 +169,10 @@ class Api {
         .then(res => res.json())
         .then((result) => {
             console.log(result);
+        })
+        
+        .catch((err) => {
+            console.log(`Ошибка: ${err}`);
         });
     }
 }

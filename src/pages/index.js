@@ -7,7 +7,8 @@ import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
 import { cardsArray } from '../utils/cards.js';
 import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, deleteElement } from '../utils/variables.js';
-import Popup from '../components/Popup';
+import Popup from '../components/Popup.js';
+import Api from '../components/Api.js';
 
 const validationParams = {
     formElement: '.popup__form',
@@ -39,6 +40,22 @@ validAvatar.enableValidation();
 
 const popupTypePicture = new PopupWithImage('.popup_type_picture');
 popupTypePicture.setEventListeners();
+
+const api = new Api({ 
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me', 
+    headers: { 
+        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92', 
+    }
+})
+
+const userName = document.querySelector('.profile__title');
+const userAbout = document.querySelector('.profile__subtitle');
+
+api.getInfo()
+.then((result) => {
+    userName.textContent = result.name;
+    userAbout.textContent = result.about;
+});
 
 const user = new UserInfo({ userNameSelector: '.profile__title', userInfoSelector: '.profile__subtitle' });
 const userInfo = user.getUserInfo();
@@ -93,8 +110,8 @@ popupTypePrevent.setEventListeners();
 editButton.addEventListener('click', () => {
     validEdit.updateErrorsAndButtonState(editForm);
 
-    nameInput.value = userInfo.user;
-    jobInput.value = userInfo.info;
+    nameInput.value = userInfo.name;
+    jobInput.value = userInfo.about;
 
     nameInput.dispatchEvent(new Event('input'));
     jobInput.dispatchEvent(new Event('input'));
@@ -113,3 +130,4 @@ avatarImg.addEventListener('click', () => {
 });
 
 deleteElement.addEventListener('click', () => handleCardPrevent());
+
