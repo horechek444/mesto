@@ -4,33 +4,11 @@ export default class Api {
         this.headers = headers;
     }
 
-    getInfo() {  // 'https://mesto.nomoreparties.co/v1/cohort-14/users/me', '015c5709-d89c-4f94-866c-ab8c6888fc92'
+    getInfo() {
         return fetch(this.baseUrl, { 
             headers: this.headers,
         })
         .then(res => res.json())
-        // .then((result) => {
-        //     console.log(result);
-        // });
-
-        // .catch((err) => {
-        //     console.log(`Ошибка: ${err}`);
-        // });
-    }
-
-    getInitialCards() {  //'https://mesto.nomoreparties.co/v1/cohort-14/cards'
-        return fetch(this.baseUrl, { 
-            headers: this.headers,
-        })
-
-        .then(res => res.json())
-        // .then((result) => {
-        //     console.log(result);
-        // })
-
-        // .catch((err) => {
-        //     console.log(`Ошибка: ${err}`);
-        // });
     }
 
     setUserInfo(newProfile) {
