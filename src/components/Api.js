@@ -11,27 +11,16 @@ export default class Api {
         .then(res => res.json())
     }
 
-    setUserInfo(newProfile) {
-        fetch('https://mesto.nomoreparties.co/v1/cohort-14/users/me', {
+    setUserInfo(item) {
+        return fetch(this.baseUrl, {
             method: 'PATCH',
-            headers: {
-                authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
-                'Content-Type': 'application/json',
-            },
+            headers: this.headers,
             body: JSON.stringify({
-                name: newProfile.name,
-                about: newProfile.about,
-            }),
+                name: item.name,
+                about: item.about
+            })
         })
-
-        .then(res => res.json())
-        .then((result) => {
-            console.log(result);
-        })
-        
-        .catch((err) => {
-            console.log(`Ошибка: ${err}`);
-        });
+        .then(res => res.json()) 
     }
 
     createCard(newCard) {

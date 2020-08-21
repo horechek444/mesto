@@ -78,19 +78,6 @@ apiForGetUserInfo.getInfo()
     });
 });
 
-const popupTypeAdd = new PopupWIthForm({
-    popupSelector: '.popup_type_add',
-    handleFormSubmit: (item) => {
-        const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
-        const cardElement = userCard.generateCard();
-        cardElement.prepend(deleteElement);
-        cardsList.addItem(cardElement);
-        popupTypeAdd.close();
-    }
-});
-
-popupTypeAdd.setEventListeners();
-
 const popupTypeAvatar = new PopupWIthForm({
     popupSelector: '.popup_type_avatar',
     handleFormSubmit: (item) => {
@@ -104,10 +91,6 @@ popupTypeAvatar.setEventListeners();
 const popupTypePrevent = new Popup('.popup_type_prevent');
 popupTypePrevent.setEventListeners();
 
-addButton.addEventListener('click', () => {
-    validAdd.updateErrorsAndButtonState(addForm);
-    popupTypeAdd.open();
-});
 
 avatarImg.addEventListener('click', () => {
     validAvatar.updateErrorsAndButtonState(avatarForm);
@@ -136,5 +119,31 @@ apiForGetCards.getInfo()
     
     cardsList.renderItems();
 
+    const popupTypeAdd = new PopupWIthForm({
+        popupSelector: '.popup_type_add',
+        handleFormSubmit: (item) => {
+            const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
+            const cardElement = userCard.generateCard();
+            cardElement.prepend(deleteElement);
+            cardsList.addItem(cardElement);
+            popupTypeAdd.close();
+        }
+    });
     
+    popupTypeAdd.setEventListeners();
+    
+    addButton.addEventListener('click', () => {
+        validAdd.updateErrorsAndButtonState(addForm);
+        popupTypeAdd.open();
+    });
 })
+
+const apiForSetInfo = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
+    headers: {
+        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
+        'Content-Type': 'application/json',
+    }
+})
+
+apiForSetInfo.setUserInfo(item)
