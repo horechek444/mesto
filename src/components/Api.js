@@ -123,23 +123,11 @@ export default class Api {
     }
 
     setAvatar(avatar) {
-        fetch('https://mesto.nomoreparties.co/v1/cohortId/users/me/avatar', {
+        return fetch(this.baseUrl, {
             method: 'PATCH',
-            headers: {
-                authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
-            },
-            body: JSON.stringify({
-                avatar: avatar.link,
-            }),
+            headers: this.headers,
+            body: JSON.stringify(avatar),
         })
-
         .then(res => res.json())
-        .then((result) => {
-            console.log(result);
-        })
-        
-        .catch((err) => {
-            console.log(`Ошибка: ${err}`);
-        });
     }
 }

@@ -5,8 +5,9 @@
     border-radius: 50%;
     cursor: pointer;
     background-image: url('../../images/avatar.jpg');
+    background-repeat: no-repeat;
     background-position: center;
-    background-size: contain;
+    background-size: cover;
 }
 
 .avatar::before {

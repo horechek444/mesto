@@ -6,7 +6,7 @@ import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
 import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, deleteElement, userName, userAbout } from '../utils/variables.js';
-import Popup from '../components/Popup.js';
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
 
 const validationParams = {
@@ -47,7 +47,6 @@ const apiForGetUserInfo = new Api({
     }
 })
 
-
 const apiForSetInfo = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
     headers: {
@@ -60,10 +59,9 @@ apiForGetUserInfo.getInfo()
 .then((result) => {
     userName.textContent = result.name;
     userAbout.textContent = result.about;
-
+    console.log(result);
     const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
-    const userInfo = user.getUserInfo();
-
+    
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
         handleFormSubmit: (item) => {
@@ -79,9 +77,9 @@ apiForGetUserInfo.getInfo()
 
     editButton.addEventListener('click', () => {
         validEdit.updateErrorsAndButtonState(editForm);
-    
-        nameInput.value = userInfo.name;
-        jobInput.value = userInfo.about;
+
+        nameInput.value = user.getUserInfo().name;
+        jobInput.value = user.getUserInfo().about;
     
         nameInput.dispatchEvent(new Event('input'));
         jobInput.dispatchEvent(new Event('input'));
@@ -90,19 +88,34 @@ apiForGetUserInfo.getInfo()
     });
 });
 
+const apiForSetAvatar = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar',
+    headers: {
+        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
+        'Content-Type': 'application/json',
+    }
+})
+
 const popupTypeAvatar = new PopupWIthForm({
     popupSelector: '.popup_type_avatar',
     handleFormSubmit: (item) => {
-        avatarImg.style.backgroundImage = `url(${item.avatar})`;
-        popupTypeAvatar.close();
+        console.log(item);
+        apiForSetAvatar.setAvatar(item)
+        .then((data) => {
+            avatarImg.style.backgroundImage = `url(${data.avatar})`;
+            popupTypeAvatar.close();
+        })
     }
 });
 
 popupTypeAvatar.setEventListeners();
 
-const popupTypePrevent = new Popup('.popup_type_prevent');
-popupTypePrevent.setEventListeners();
+// const popupTypePrevent = new PopupWithSubmit({ 
+//     popupSelector: '.popup_type_prevent',
+//     handleFormSubmit: () => {
 
+//     }});
+// popupTypePrevent.setEventListeners();
 
 avatarImg.addEventListener('click', () => {
     validAvatar.updateErrorsAndButtonState(avatarForm);
