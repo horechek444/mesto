@@ -47,19 +47,31 @@ const apiForGetUserInfo = new Api({
     }
 })
 
+
+const apiForSetInfo = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
+    headers: {
+        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
+        'Content-Type': 'application/json',
+    }
+})
+
 apiForGetUserInfo.getInfo()
 .then((result) => {
     userName.textContent = result.name;
     userAbout.textContent = result.about;
 
-    const user = new UserInfo({ userNameElement: userName.textContent, userInfoElement: userAbout.textContent });
+    const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
     const userInfo = user.getUserInfo();
 
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
         handleFormSubmit: (item) => {
-            user.setUserInfo(item);
-            popupTypeEdit.close();
+            apiForSetInfo.setInfo(item)
+            .then((data) => {
+                user.setUserInfo(data);
+                popupTypeEdit.close();
+            })
         }
     });
     
@@ -138,12 +150,3 @@ apiForGetCards.getInfo()
     });
 })
 
-const apiForSetInfo = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
-    headers: {
-        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
-        'Content-Type': 'application/json',
-    }
-})
-
-apiForSetInfo.setUserInfo(item)
