@@ -59,7 +59,8 @@ apiForGetUserInfo.getInfo()
 .then((result) => {
     userName.textContent = result.name;
     userAbout.textContent = result.about;
-    console.log(result);
+    avatarImg.style.backgroundImage = `url(${result.avatar})`;
+
     const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
     
     const popupTypeEdit = new PopupWIthForm({
