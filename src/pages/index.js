@@ -28,6 +28,10 @@ function handleCardPrevent() {
     popupTypePrevent.open();
 }
 
+function handleDeleteClick() {
+    
+}
+
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
@@ -77,6 +81,15 @@ const apiForCreateCard = new Api ({
         'Content-Type': 'application/json',
     }
 })
+
+// const apiForDelete = new Api({
+//     baseUrl: (url + 'cards' + `${id}`),
+//     headers: {
+//         authorization: token,
+//         'Content-Type': 'application/json',
+//     }
+// })
+
 
 apiForGetUserInfo.getInfo()
 .then((result) => {
@@ -142,7 +155,6 @@ deleteElement.addEventListener('click', () => handleCardPrevent());
 
 apiForGetCards.getInfo()
 .then((cards) => {
-    console.log(cards);
     const cardsList = new Section({
         items: cards,
         renderer: (item) => {
@@ -150,6 +162,10 @@ apiForGetCards.getInfo()
             const cardElement = card.generateCard();
             const cardLikeElement = cardElement.querySelector('.pictures__like-counter');
             cardLikeElement.textContent = item.likes.length;
+            if (item.owner._id === '5c88991f2f53f01c70db32ff') {
+                
+                cardElement.prepend(deleteElement);
+            }
             cardsList.addItem(cardElement);
         },
     }, '.pictures__list')
@@ -163,7 +179,6 @@ apiForGetCards.getInfo()
             .then((data) => {
                 const userCard = new Card(data, handleCardClick, picturesTemplateSelector);
                 const cardElement = userCard.generateCard();
-                cardElement.prepend(deleteElement);
                 cardsList.addItem(cardElement);
                 popupTypeAdd.close();
             })
