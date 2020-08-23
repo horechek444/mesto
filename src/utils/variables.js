@@ -18,3 +18,6 @@ export const avatarForm = popupAvatar.querySelector('.popup__form');
 export const deleteElement = document.createElement('button');
 deleteElement.className = 'button pictures__delete opacity';
 deleteElement.type = 'button';
+
+export const token = '015c5709-d89c-4f94-866c-ab8c6888fc92';
+export const url = 'https://mesto.nomoreparties.co/v1/cohort-14/'

@@ -5,7 +5,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, deleteElement, userName, userAbout } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, deleteElement, userName, userAbout, token, url } from '../utils/variables.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
 
@@ -41,16 +41,39 @@ const popupTypePicture = new PopupWithImage('.popup_type_picture');
 popupTypePicture.setEventListeners();
 
 const apiForGetUserInfo = new Api({ 
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me', 
+    baseUrl: (url + 'users/me'), 
     headers: { 
-        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92', 
+        authorization: token, 
     }
 })
 
 const apiForSetInfo = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me',
+    baseUrl: (url + 'users/me'),
     headers: {
-        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
+        authorization: token,
+        'Content-Type': 'application/json',
+    }
+})
+
+const apiForSetAvatar = new Api({
+    baseUrl: (url + 'users/me/avatar'),
+    headers: {
+        authorization: token,
+        'Content-Type': 'application/json',
+    }
+})
+
+const apiForGetCards = new Api({ 
+    baseUrl: (url + 'cards'), 
+    headers: { 
+        authorization: token, 
+    }
+})
+
+const apiForCreateCard = new Api ({
+    baseUrl: (url + 'cards'), 
+    headers: { 
+        authorization: token,
         'Content-Type': 'application/json',
     }
 })
@@ -89,14 +112,6 @@ apiForGetUserInfo.getInfo()
     });
 });
 
-const apiForSetAvatar = new Api({
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/users/me/avatar',
-    headers: {
-        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92',
-        'Content-Type': 'application/json',
-    }
-})
-
 const popupTypeAvatar = new PopupWIthForm({
     popupSelector: '.popup_type_avatar',
     handleFormSubmit: (item) => {
@@ -125,20 +140,16 @@ avatarImg.addEventListener('click', () => {
 
 deleteElement.addEventListener('click', () => handleCardPrevent());
 
-const apiForGetCards = new Api({ 
-    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14/cards', 
-    headers: { 
-        authorization: '015c5709-d89c-4f94-866c-ab8c6888fc92', 
-    }
-})
-
 apiForGetCards.getInfo()
 .then((cards) => {
+    console.log(cards);
     const cardsList = new Section({
         items: cards,
         renderer: (item) => {
             const card = new Card(item, handleCardClick, picturesTemplateSelector);
             const cardElement = card.generateCard();
+            const cardLikeElement = cardElement.querySelector('.pictures__like-counter');
+            cardLikeElement.textContent = item.likes.length;
             cardsList.addItem(cardElement);
         },
     }, '.pictures__list')
@@ -148,11 +159,14 @@ apiForGetCards.getInfo()
     const popupTypeAdd = new PopupWIthForm({
         popupSelector: '.popup_type_add',
         handleFormSubmit: (item) => {
-            const userCard = new Card(item, handleCardClick, picturesTemplateSelector);
-            const cardElement = userCard.generateCard();
-            cardElement.prepend(deleteElement);
-            cardsList.addItem(cardElement);
-            popupTypeAdd.close();
+            apiForCreateCard.createCard(item)
+            .then((data) => {
+                const userCard = new Card(data, handleCardClick, picturesTemplateSelector);
+                const cardElement = userCard.generateCard();
+                cardElement.prepend(deleteElement);
+                cardsList.addItem(cardElement);
+                popupTypeAdd.close();
+            })
         }
     });
     
