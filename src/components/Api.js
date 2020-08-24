@@ -50,24 +50,18 @@ export default class Api {
         .then(res => res.json())
     }
 
-    likeCard(card) { 
+    likeCard(id) { 
         return fetch(`${this.baseUrl}cards/likes/${id}`, {
             method: 'PUT',
             headers: this.headers,
-            body: JSON.stringify({
-                ID: card._id,
-            })
         })
         .then(res => res.json())
     }
 
-    dislikeCard(card) { 
+    dislikeCard(id) { 
         return fetch(`${this.baseUrl}cards/likes/${id}`, {
             method: 'DELETE',
             headers: this.headers,
-            body: JSON.stringify({
-                ID: card._id,
-            })
         })
         .then(res => res.json())
     }
