@@ -5,7 +5,7 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, deleteElement, userName, userAbout, token, url } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url } from '../utils/variables.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
 
@@ -24,14 +24,6 @@ function handleCardClick() {
     popupTypePicture.open();
 }
 
-function handleCardPrevent() {
-    popupTypePrevent.open();
-}
-
-function handleDeleteClick() {
-    
-}
-
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
@@ -44,65 +36,27 @@ validAvatar.enableValidation();
 const popupTypePicture = new PopupWithImage('.popup_type_picture');
 popupTypePicture.setEventListeners();
 
-const apiForGetUserInfo = new Api({ 
-    baseUrl: (url + 'users/me'), 
-    headers: { 
-        authorization: token, 
-    }
-})
-
-const apiForSetInfo = new Api({
-    baseUrl: (url + 'users/me'),
-    headers: {
-        authorization: token,
-        'Content-Type': 'application/json',
-    }
-})
-
-const apiForSetAvatar = new Api({
-    baseUrl: (url + 'users/me/avatar'),
-    headers: {
-        authorization: token,
-        'Content-Type': 'application/json',
-    }
-})
-
-const apiForGetCards = new Api({ 
-    baseUrl: (url + 'cards'), 
-    headers: { 
-        authorization: token, 
-    }
-})
-
-const apiForCreateCard = new Api ({
-    baseUrl: (url + 'cards'), 
+const api = new Api({ 
+    baseUrl: url, 
     headers: { 
         authorization: token,
         'Content-Type': 'application/json',
     }
 })
 
-// const apiForDelete = new Api({
-//     baseUrl: (url + 'cards' + `${id}`),
-//     headers: {
-//         authorization: token,
-//         'Content-Type': 'application/json',
-//     }
-// })
-
-
-apiForGetUserInfo.getInfo()
+api.getUserInfo()
 .then((result) => {
     userName.textContent = result.name;
     userAbout.textContent = result.about;
     avatarImg.style.backgroundImage = `url(${result.avatar})`;
+    const currentUserId = result._id;
 
     const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
     
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
         handleFormSubmit: (item) => {
-            apiForSetInfo.setInfo(item)
+            api.setUserInfo(item)
             .then((data) => {
                 user.setUserInfo(data);
                 popupTypeEdit.close();
@@ -123,13 +77,70 @@ apiForGetUserInfo.getInfo()
     
         popupTypeEdit.open(); 
     });
+
+    api.getCards()
+    .then((cards) => {
+
+        const handleDelete = () => {
+            popupTypePrevent.setEventListeners((item) => {
+                api.deleteCard(item._id)
+                .then(...);
+                });
+            popupTypePrevent.open();
+        }
+
+        const popupTypePrevent = new PopupWithSubmit('.popup_type_prevent'
+            // handleFormSubmit: (id) => {
+            //     api.deleteCard(id)
+            //     .then((card) => {
+            //         card.deleteCard();
+            //         popupTypePrevent.close();
+            //     })
+            );
+        popupTypePrevent.setEventListeners();
+
+
+        const cardsList = new Section({
+            items: cards,
+            renderer: (item) => {
+                const card = new Card(item, handleCardClick, currentUserId, picturesTemplateSelector);
+                const cardElement = card.generateCard();
+                const cardLikeElement = cardElement.querySelector('.pictures__like-counter');
+                cardLikeElement.textContent = item.likes.length;
+                cardsList.addItem(cardElement);
+            },
+        }, '.pictures__list')
+        
+        cardsList.renderItems();
+    
+        const popupTypeAdd = new PopupWIthForm({
+            popupSelector: '.popup_type_add',
+            handleFormSubmit: (item) => {
+                api.createCard(item)
+                .then((data) => {
+                    const userCard = new Card(data, handleCardClick, currentUserId, picturesTemplateSelector);
+                    const cardElement = userCard.generateCard();
+                    cardsList.addItem(cardElement);
+                    popupTypeAdd.close();
+                })
+            }
+        });
+        
+        popupTypeAdd.setEventListeners();
+        
+        addButton.addEventListener('click', () => {
+            validAdd.updateErrorsAndButtonState(addForm);
+            popupTypeAdd.open();
+        });
+
+        
+    })
 });
 
 const popupTypeAvatar = new PopupWIthForm({
     popupSelector: '.popup_type_avatar',
     handleFormSubmit: (item) => {
-        console.log(item);
-        apiForSetAvatar.setAvatar(item)
+        api.setAvatar(item)
         .then((data) => {
             avatarImg.style.backgroundImage = `url(${data.avatar})`;
             popupTypeAvatar.close();
@@ -139,57 +150,7 @@ const popupTypeAvatar = new PopupWIthForm({
 
 popupTypeAvatar.setEventListeners();
 
-// const popupTypePrevent = new PopupWithSubmit({ 
-//     popupSelector: '.popup_type_prevent',
-//     handleFormSubmit: () => {
-
-//     }});
-// popupTypePrevent.setEventListeners();
-
 avatarImg.addEventListener('click', () => {
     validAvatar.updateErrorsAndButtonState(avatarForm);
     popupTypeAvatar.open();
 });
-
-deleteElement.addEventListener('click', () => handleCardPrevent());
-
-apiForGetCards.getInfo()
-.then((cards) => {
-    const cardsList = new Section({
-        items: cards,
-        renderer: (item) => {
-            const card = new Card(item, handleCardClick, picturesTemplateSelector);
-            const cardElement = card.generateCard();
-            const cardLikeElement = cardElement.querySelector('.pictures__like-counter');
-            cardLikeElement.textContent = item.likes.length;
-            if (item.owner._id === '5c88991f2f53f01c70db32ff') {
-                
-                cardElement.prepend(deleteElement);
-            }
-            cardsList.addItem(cardElement);
-        },
-    }, '.pictures__list')
-    
-    cardsList.renderItems();
-
-    const popupTypeAdd = new PopupWIthForm({
-        popupSelector: '.popup_type_add',
-        handleFormSubmit: (item) => {
-            apiForCreateCard.createCard(item)
-            .then((data) => {
-                const userCard = new Card(data, handleCardClick, picturesTemplateSelector);
-                const cardElement = userCard.generateCard();
-                cardsList.addItem(cardElement);
-                popupTypeAdd.close();
-            })
-        }
-    });
-    
-    popupTypeAdd.setEventListeners();
-    
-    addButton.addEventListener('click', () => {
-        validAdd.updateErrorsAndButtonState(addForm);
-        popupTypeAdd.open();
-    });
-})
-

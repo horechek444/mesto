@@ -4,15 +4,22 @@ export default class Api {
         this.headers = headers;
     }
 
-    getInfo() {
-        return fetch(this.baseUrl, { 
+    getUserInfo() {
+        return fetch(`${this.baseUrl}users/me`, { 
             headers: this.headers,
         })
         .then(res => res.json())
     }
 
-    setInfo(item) {
-        return fetch(this.baseUrl, {
+    getCards() {
+        return fetch(`${this.baseUrl}cards`, { 
+            headers: this.headers,
+        })
+        .then(res => res.json())
+    }
+
+    setUserInfo(item) {
+        return fetch(`${this.baseUrl}users/me`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify({
@@ -24,7 +31,7 @@ export default class Api {
     }
 
     createCard(newCard) { 
-        return fetch(this.baseUrl, {
+        return fetch(`${this.baseUrl}cards`, {
             method: 'POST',
             headers: this.headers,
             body: JSON.stringify({
@@ -35,16 +42,16 @@ export default class Api {
         .then(res => res.json())
     }
 
-    deleteCard(id) { // узнать ID карточки, подставить в URL и удалить ее из списка карточек  'https://mesto.nomoreparties.co/v1/cohort-14/cards/cardId'
-        return fetch(`${this.baseUrl}/${id}`, {
+    deleteCard(id) { 
+        return fetch(`${this.baseUrl}cards/${id}`, {
             method: 'DELETE',
             headers: this.headers,
         })
         .then(res => res.json())
     }
 
-    likeCard(card) { // 'https://mesto.nomoreparties.co/v1/cohortId/cards/likes/cardId'
-        return fetch(this.baseUrl, {
+    likeCard(card) { 
+        return fetch(`${this.baseUrl}cards/likes/${id}`, {
             method: 'PUT',
             headers: this.headers,
             body: JSON.stringify({
@@ -54,8 +61,8 @@ export default class Api {
         .then(res => res.json())
     }
 
-    dislikeCard(card) { // 'https://mesto.nomoreparties.co/v1/cohortId/cards/likes/cardId'
-        return fetch(this.baseUrl, {
+    dislikeCard(card) { 
+        return fetch(`${this.baseUrl}cards/likes/${id}`, {
             method: 'DELETE',
             headers: this.headers,
             body: JSON.stringify({
@@ -66,7 +73,7 @@ export default class Api {
     }
 
     setAvatar(avatar) {
-        return fetch(this.baseUrl, {
+        return fetch(`${this.baseUrl}users/me/avatar`, {
             method: 'PATCH',
             headers: this.headers,
             body: JSON.stringify(avatar),
