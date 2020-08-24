@@ -89,7 +89,10 @@ api.getUserInfo()
             renderer: (item) => {
                 const card = new Card(item, handleCardClick, { 
                     handleLikeClick: () => {
-                        ((cardElement.querySelector('.pictures__like').classList.contains('pictures__like_active')) && (item.likes.length > 0)) ? api.dislikeCard(item._id).then((data) => { card.disLikeCard(); console.log(data) }) : api.likeCard(item._id).then((data) => {card.likeCard(); console.log(data) });
+                        // let isLiked = ((cardElement.querySelector('.pictures__like').classList.contains('pictures__like_active')) && (item.likes.length > 0));
+                        // console.log(card.isLiked());
+                        const promise = card.isLiked() ? api.dislikeCard(item._id) : api.likeCard(item._id);
+                        promise.then((data) => { card.setLike(data); });
                     }
                 }, currentUserId, picturesTemplateSelector);
                 const cardElement = card.generateCard();
@@ -104,16 +107,7 @@ api.getUserInfo()
             handleFormSubmit: (item) => {
                 api.createCard(item)
                 .then((data) => {
-                    const userCard = new Card(data, handleCardClick, { 
-                        handleLikeClick: () => {
-                            api.likeCard(item._id)
-                            .then((data) => {
-                                // card.likeCard();
-                                //console.log(data);
-                            })
-                        }
-                    
-                    }, currentUserId, picturesTemplateSelector);          
+                    const userCard = new Card(data, handleCardClick, { handleLikeClick: null }, currentUserId, picturesTemplateSelector);
                     const cardElement = userCard.generateCard();
                     cardsList.addItem(cardElement);
                     popupTypeAdd.close();
