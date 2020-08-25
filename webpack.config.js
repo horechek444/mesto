@@ -8,6 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'main.js',
     },
+    devtool: 'eval',
     module: {
         rules: [
             {
@@ -40,10 +41,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './src/index.html',
         }),
-        new MiniCssExtractPlugin(),
-        // new webpack.LoaderOptionsPlugin({
-        //     debug: true,
-        // }),      
+        new MiniCssExtractPlugin(),     
     ],
     devServer: {
         host: '127.0.0.1',
