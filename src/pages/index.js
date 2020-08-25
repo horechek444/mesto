@@ -61,6 +61,9 @@ api.getUserInfo()
                 user.setUserInfo(data);
                 popupTypeEdit.close();
             })
+            .catch((err) => {
+                console.log(`Ошибка: ${err}`)
+            });
         }
     });
     
@@ -89,10 +92,12 @@ api.getUserInfo()
             renderer: (item) => {
                 const card = new Card(item, handleCardClick, { 
                     handleLikeClick: () => {
-                        // let isLiked = ((cardElement.querySelector('.pictures__like').classList.contains('pictures__like_active')) && (item.likes.length > 0));
-                        // console.log(card.isLiked());
                         const promise = card.isLiked() ? api.dislikeCard(item._id) : api.likeCard(item._id);
-                        promise.then((data) => { card.setLike(data); });
+                        promise
+                        .then((data) => { card.setLike(data) })
+                        .catch((err) => {
+                            console.log(`Ошибка: ${err}`)
+                        });
                     }
                 }, currentUserId, picturesTemplateSelector);
                 const cardElement = card.generateCard();
@@ -110,8 +115,12 @@ api.getUserInfo()
                     const userCard = new Card(data, handleCardClick, { handleLikeClick: null }, currentUserId, picturesTemplateSelector);
                     const cardElement = userCard.generateCard();
                     cardsList.addItem(cardElement);
+                    renderLoading(true);
                     popupTypeAdd.close();
                 })
+                .catch((err) => {
+                    console.log(`Ошибка: ${err}`)
+                });
             }
         });
         
@@ -130,6 +139,9 @@ api.getUserInfo()
                     avatarImg.style.backgroundImage = `url(${data.avatar})`;
                     popupTypeAvatar.close();
                 })
+                .catch((err) => {
+                    console.log(`Ошибка: ${err}`)
+                });
             }
         });
         
@@ -140,5 +152,11 @@ api.getUserInfo()
             popupTypeAvatar.open();
         });
     })
+    .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+    });
+})
+.catch((err) => {
+    console.log(`Ошибка: ${err}`)
 });
 
