@@ -5,23 +5,49 @@ import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWIthForm from '../components/PopupWithForm.js';;
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url, validationParams, editSubmit, addSubmit, avatarSubmit } from '../utils/variables.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
 
-const validationParams = {
-    formElement: '.popup__form',
-    inputElement: '.popup__input',
-    buttonElement: '.popup__submit',    
-    inactiveButtonClass: 'popup__submit_type_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorShowClass: 'popup__error_type_active',
-    controlSelectorClass: '.popup__control',
-    errorClass: '.popup__error'
-};
-
 function handleCardClick() {
     popupTypePicture.open();
+}
+
+function handleLikeClick(card, data) {
+    const promise = card.isLiked() ? api.dislikeCard(data._id) : api.likeCard(data._id);
+    promise
+    .then((data) => { card.setLike(data) })
+    .catch((err) => {
+        console.log(`${err}`)
+    });
+}
+const popupTypeDelete = new PopupWithSubmit('.popup_type_prevent');
+popupTypeDelete.setEventListeners();
+
+function handleCardDelete(card) {
+    popupTypeDelete.setFormSubmitHandler(() => {
+        api.deleteCard(card._id)
+            .then(() => {
+                card.deleteCard();
+                popupTypeDelete.close();
+            })
+            .catch((err) => {
+                console.log(`${err}`)
+            });
+    });
+    popupTypeDelete.open();
+}
+
+function renderLoading(isLoading) {
+    if (isLoading) {
+        Array.from(document.querySelectorAll('.popup__submit_type_save')).forEach((submit) => {
+            submit.value = "Сохранение...";
+        })
+    } else {
+        Array.from(document.querySelectorAll('.popup__submit_type_save')).forEach((submit) => {
+            submit.value = "Сохранить";
+        })
+    }
 }
 
 const validAdd = new FormValidator(validationParams, addForm);
@@ -56,13 +82,17 @@ api.getUserInfo()
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
         handleFormSubmit: (item) => {
+            renderLoading(true);
             api.setUserInfo(item)
             .then((data) => {
                 user.setUserInfo(data);
                 popupTypeEdit.close();
             })
             .catch((err) => {
-                console.log(`Ошибка: ${err}`)
+                console.log(`${err}`)
+            })
+            .finally(() => {
+                renderLoading(false);
             });
         }
     });
@@ -83,23 +113,15 @@ api.getUserInfo()
 
     api.getCards()
     .then((cards) => {
-
-        // const popupTypePrevent = new PopupWithSubmit('.popup_type_prevent');
-        // popupTypePrevent.setEventListeners();
-
         const cardsList = new Section({
             items: cards,
             renderer: (item) => {
-                const card = new Card(item, handleCardClick, { 
-                    handleLikeClick: () => {
-                        const promise = card.isLiked() ? api.dislikeCard(item._id) : api.likeCard(item._id);
-                        promise
-                        .then((data) => { card.setLike(data) })
-                        .catch((err) => {
-                            console.log(`Ошибка: ${err}`)
-                        });
-                    }
-                }, currentUserId, picturesTemplateSelector);
+                const card = new Card(item, 
+                    handleCardClick, {
+                    handleLikeClick: () => handleLikeClick(card, item),
+                    handleCardDelete: () => handleCardDelete(card) }, 
+                    currentUserId, 
+                    picturesTemplateSelector);
                 const cardElement = card.generateCard();
                 cardsList.addItem(cardElement);
             },
@@ -110,16 +132,24 @@ api.getUserInfo()
         const popupTypeAdd = new PopupWIthForm({
             popupSelector: '.popup_type_add',
             handleFormSubmit: (item) => {
+                renderLoading(true);
                 api.createCard(item)
                 .then((data) => {
-                    const userCard = new Card(data, handleCardClick, { handleLikeClick: null }, currentUserId, picturesTemplateSelector);
+                    const userCard = new Card(data, 
+                        handleCardClick, { 
+                        handleLikeClick: () => handleLikeClick(userCard, data), 
+                        handleCardDelete: () => handleCardDelete(userCard) }, 
+                        currentUserId, 
+                        picturesTemplateSelector);
                     const cardElement = userCard.generateCard();
                     cardsList.addItem(cardElement);
-                    renderLoading(true);
                     popupTypeAdd.close();
                 })
                 .catch((err) => {
-                    console.log(`Ошибка: ${err}`)
+                    console.log(`${err}`)
+                })
+                .finally(() => {
+                    renderLoading(false);
                 });
             }
         });
@@ -134,13 +164,17 @@ api.getUserInfo()
         const popupTypeAvatar = new PopupWIthForm({
             popupSelector: '.popup_type_avatar',
             handleFormSubmit: (item) => {
+                renderLoading(true);
                 api.setAvatar(item)
                 .then((data) => {
                     avatarImg.style.backgroundImage = `url(${data.avatar})`;
                     popupTypeAvatar.close();
                 })
                 .catch((err) => {
-                    console.log(`Ошибка: ${err}`)
+                    console.log(`${err}`)
+                })
+                .finally(() => {
+                    renderLoading(false);
                 });
             }
         });
@@ -153,10 +187,9 @@ api.getUserInfo()
         });
     })
     .catch((err) => {
-        console.log(`Ошибка: ${err}`)
+        console.log(`${err}`)
     });
 })
 .catch((err) => {
-    console.log(`Ошибка: ${err}`)
+    console.log(`${err}`)
 });
-
