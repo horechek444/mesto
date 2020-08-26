@@ -16,9 +16,11 @@ function handleCardClick() {
 function handleLikeClick(card, data) {
     const promise = card.isLiked() ? api.dislikeCard(data._id) : api.likeCard(data._id);
     promise
-    .then((data) => { card.setLike(data) })
+    .then((data) => { 
+        card.setLike(data);
+    })
     .catch((err) => {
-        console.log(`${err}`)
+        console.log(`${err}`);
     });
 }
 const popupTypeDelete = new PopupWithSubmit('.popup_type_prevent');
@@ -32,7 +34,7 @@ function handleCardDelete(card) {
                 popupTypeDelete.close();
             })
             .catch((err) => {
-                console.log(`${err}`)
+                console.log(`${err}`);
             });
     });
     popupTypeDelete.open();
@@ -58,6 +60,7 @@ function newCardMaker(data, currentUserId, cardsList) {
         currentUserId, 
         picturesTemplateSelector);
     const cardElement = newCard.generateCard();
+    newCard.setLike(data);
     cardsList.addItem(cardElement);
 }
 
@@ -85,10 +88,9 @@ api.getUserInfo()
 .then((result) => {
     const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
     user.setUserInfo(result);
-    const userData = user.getUserInfo();
     avatarImg.style.backgroundImage = `url(${result.avatar})`;
     const currentUserId = result._id;
-    
+
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
         handleFormSubmit: (item) => {
@@ -96,13 +98,13 @@ api.getUserInfo()
             api.setUserInfo(item)
             .then((data) => {
                 user.setUserInfo(data);
+                popupTypeEdit.close();
             })
             .catch((err) => {
-                console.log(`${err}`)
+                console.log(`${err}`);
             })
             .finally(() => {
                 renderLoading(false);
-                popupTypeEdit.close();
             })
         }
     });
@@ -111,6 +113,8 @@ api.getUserInfo()
 
     editButton.addEventListener('click', () => {
         validEdit.updateErrorsAndButtonState(editForm);
+        
+        const userData = user.getUserInfo();
 
         nameInput.value = userData.name;
         jobInput.value = userData.about;
@@ -125,7 +129,9 @@ api.getUserInfo()
     .then((cards) => {
         const cardsList = new Section({
             items: cards,
-            renderer: (item) => { newCardMaker(item, currentUserId, cardsList) },
+            renderer: (item) => { 
+                newCardMaker(item, currentUserId, cardsList);
+            },
         }, '.pictures__list')
         
         cardsList.renderItems();
@@ -135,13 +141,15 @@ api.getUserInfo()
             handleFormSubmit: (item) => {
                 renderLoading(true);
                 api.createCard(item)
-                .then((data) => { newCardMaker(data, currentUserId, cardsList) })
+                .then((data) => { 
+                    newCardMaker(data, currentUserId, cardsList);
+                    popupTypeAdd.close();
+                })
                 .catch((err) => {
-                    console.log(`${err}`)
+                    console.log(`${err}`);
                 })
                 .finally(() => {
                     renderLoading(false);
-                    popupTypeAdd.close();
                 })
             }
         });
@@ -160,13 +168,13 @@ api.getUserInfo()
                 api.setAvatar(item)
                 .then((data) => {
                     avatarImg.style.backgroundImage = `url(${data.avatar})`;
+                    popupTypeAvatar.close();
                 })
                 .catch((err) => {
                     console.log(`${err}`)
                 })
                 .finally(() => {
                     renderLoading(false);
-                    popupTypeAvatar.close();
                 })
             }
         });
@@ -179,9 +187,9 @@ api.getUserInfo()
         });
     })
     .catch((err) => {
-        console.log(`${err}`)
+        console.log(`${err}`);
     });
 })
 .catch((err) => {
-    console.log(`${err}`)
+    console.log(`${err}`);
 });
