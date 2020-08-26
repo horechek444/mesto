@@ -2,10 +2,10 @@ import './index.css';
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWIthForm from '../components/PopupWithForm.js';;
+import PopupWIthForm from '../components/PopupWithForm.js';
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url, validationParams, editSubmit, addSubmit, avatarSubmit } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url, validationParams, allSavedSubmits } from '../utils/variables.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
 
@@ -40,11 +40,11 @@ function handleCardDelete(card) {
 
 function renderLoading(isLoading) {
     if (isLoading) {
-        Array.from(document.querySelectorAll('.popup__submit_type_save')).forEach((submit) => {
+        Array.from(allSavedSubmits).forEach((submit) => {
             submit.value = "Сохранение...";
         })
     } else {
-        Array.from(document.querySelectorAll('.popup__submit_type_save')).forEach((submit) => {
+        Array.from(allSavedSubmits).forEach((submit) => {
             submit.value = "Сохранить";
         })
     }
@@ -72,12 +72,11 @@ const api = new Api({
 
 api.getUserInfo()
 .then((result) => {
-    userName.textContent = result.name;
-    userAbout.textContent = result.about;
+    const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
+    user.setUserInfo(result);
+    const userData = user.getUserInfo();
     avatarImg.style.backgroundImage = `url(${result.avatar})`;
     const currentUserId = result._id;
-
-    const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
     
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
@@ -86,14 +85,14 @@ api.getUserInfo()
             api.setUserInfo(item)
             .then((data) => {
                 user.setUserInfo(data);
-                popupTypeEdit.close();
             })
             .catch((err) => {
                 console.log(`${err}`)
             })
             .finally(() => {
                 renderLoading(false);
-            });
+                popupTypeEdit.close();
+            })
         }
     });
     
@@ -102,9 +101,9 @@ api.getUserInfo()
     editButton.addEventListener('click', () => {
         validEdit.updateErrorsAndButtonState(editForm);
 
-        nameInput.value = user.getUserInfo().name;
-        jobInput.value = user.getUserInfo().about;
-    
+        nameInput.value = userData.name;
+        jobInput.value = userData.about;
+
         nameInput.dispatchEvent(new Event('input'));
         jobInput.dispatchEvent(new Event('input'));
     
@@ -143,14 +142,14 @@ api.getUserInfo()
                         picturesTemplateSelector);
                     const cardElement = userCard.generateCard();
                     cardsList.addItem(cardElement);
-                    popupTypeAdd.close();
                 })
                 .catch((err) => {
                     console.log(`${err}`)
                 })
                 .finally(() => {
                     renderLoading(false);
-                });
+                    popupTypeAdd.close();
+                })
             }
         });
         
@@ -168,14 +167,14 @@ api.getUserInfo()
                 api.setAvatar(item)
                 .then((data) => {
                     avatarImg.style.backgroundImage = `url(${data.avatar})`;
-                    popupTypeAvatar.close();
                 })
                 .catch((err) => {
                     console.log(`${err}`)
                 })
                 .finally(() => {
                     renderLoading(false);
-                });
+                    popupTypeAvatar.close();
+                })
             }
         });
         

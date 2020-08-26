@@ -15,6 +15,8 @@ export const avatarImg = document.querySelector('.avatar');
 const avatarPopup = document.querySelector('.popup_type_avatar');
 export const avatarForm = avatarPopup.querySelector('.popup__form');
 
+export const allSavedSubmits = document.querySelectorAll('.popup__submit_type_save');
+
 export const token = '015c5709-d89c-4f94-866c-ab8c6888fc92';
 export const url = 'https://mesto.nomoreparties.co/v1/cohort-14/';
 
