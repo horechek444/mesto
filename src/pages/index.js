@@ -50,6 +50,17 @@ function renderLoading(isLoading) {
     }
 }
 
+function newCardMaker(data, currentUserId, cardsList) {
+    const newCard = new Card(data, 
+        handleCardClick, {
+        handleLikeClick: () => handleLikeClick(newCard, data),
+        handleCardDelete: () => handleCardDelete(newCard) }, 
+        currentUserId, 
+        picturesTemplateSelector);
+    const cardElement = newCard.generateCard();
+    cardsList.addItem(cardElement);
+}
+
 const validAdd = new FormValidator(validationParams, addForm);
 validAdd.enableValidation();
 
@@ -114,16 +125,7 @@ api.getUserInfo()
     .then((cards) => {
         const cardsList = new Section({
             items: cards,
-            renderer: (item) => {
-                const card = new Card(item, 
-                    handleCardClick, {
-                    handleLikeClick: () => handleLikeClick(card, item),
-                    handleCardDelete: () => handleCardDelete(card) }, 
-                    currentUserId, 
-                    picturesTemplateSelector);
-                const cardElement = card.generateCard();
-                cardsList.addItem(cardElement);
-            },
+            renderer: (item) => { newCardMaker(item, currentUserId, cardsList) },
         }, '.pictures__list')
         
         cardsList.renderItems();
@@ -133,16 +135,7 @@ api.getUserInfo()
             handleFormSubmit: (item) => {
                 renderLoading(true);
                 api.createCard(item)
-                .then((data) => {
-                    const userCard = new Card(data, 
-                        handleCardClick, { 
-                        handleLikeClick: () => handleLikeClick(userCard, data), 
-                        handleCardDelete: () => handleCardDelete(userCard) }, 
-                        currentUserId, 
-                        picturesTemplateSelector);
-                    const cardElement = userCard.generateCard();
-                    cardsList.addItem(cardElement);
-                })
+                .then((data) => { newCardMaker(data, currentUserId, cardsList) })
                 .catch((err) => {
                     console.log(`${err}`)
                 })
