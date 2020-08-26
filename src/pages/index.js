@@ -2,10 +2,10 @@ import './index.css';
 import Card from '../components/Card.js';
 import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWIthForm from '../components/PopupWithForm.js';;
+import PopupWIthForm from '../components/PopupWithForm.js';
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
-import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url, validationParams, editSubmit, addSubmit, avatarSubmit } from '../utils/variables.js';
+import { editButton, editForm, nameInput, jobInput, addButton, addForm, picturesTemplateSelector, avatarImg, avatarForm, userName, userAbout, token, url, validationParams, allSavedSubmits } from '../utils/variables.js';
 import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import Api from '../components/Api.js';
 
@@ -16,9 +16,11 @@ function handleCardClick() {
 function handleLikeClick(card, data) {
     const promise = card.isLiked() ? api.dislikeCard(data._id) : api.likeCard(data._id);
     promise
-    .then((data) => { card.setLike(data) })
+    .then((data) => { 
+        card.setLike(data);
+    })
     .catch((err) => {
-        console.log(`${err}`)
+        console.log(`${err}`);
     });
 }
 const popupTypeDelete = new PopupWithSubmit('.popup_type_prevent');
@@ -32,7 +34,7 @@ function handleCardDelete(card) {
                 popupTypeDelete.close();
             })
             .catch((err) => {
-                console.log(`${err}`)
+                console.log(`${err}`);
             });
     });
     popupTypeDelete.open();
@@ -40,14 +42,26 @@ function handleCardDelete(card) {
 
 function renderLoading(isLoading) {
     if (isLoading) {
-        Array.from(document.querySelectorAll('.popup__submit_type_save')).forEach((submit) => {
+        Array.from(allSavedSubmits).forEach((submit) => {
             submit.value = "Сохранение...";
         })
     } else {
-        Array.from(document.querySelectorAll('.popup__submit_type_save')).forEach((submit) => {
+        Array.from(allSavedSubmits).forEach((submit) => {
             submit.value = "Сохранить";
         })
     }
+}
+
+function newCardMaker(data, currentUserId, cardsList) {
+    const newCard = new Card(data, 
+        handleCardClick, {
+        handleLikeClick: () => handleLikeClick(newCard, data),
+        handleCardDelete: () => handleCardDelete(newCard) }, 
+        currentUserId, 
+        picturesTemplateSelector);
+    const cardElement = newCard.generateCard();
+    newCard.setLike(data);
+    cardsList.addItem(cardElement);
 }
 
 const validAdd = new FormValidator(validationParams, addForm);
@@ -72,13 +86,11 @@ const api = new Api({
 
 api.getUserInfo()
 .then((result) => {
-    userName.textContent = result.name;
-    userAbout.textContent = result.about;
+    const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
+    user.setUserInfo(result);
     avatarImg.style.backgroundImage = `url(${result.avatar})`;
     const currentUserId = result._id;
 
-    const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
-    
     const popupTypeEdit = new PopupWIthForm({
         popupSelector: '.popup_type_edit',
         handleFormSubmit: (item) => {
@@ -89,11 +101,11 @@ api.getUserInfo()
                 popupTypeEdit.close();
             })
             .catch((err) => {
-                console.log(`${err}`)
+                console.log(`${err}`);
             })
             .finally(() => {
                 renderLoading(false);
-            });
+            })
         }
     });
     
@@ -101,10 +113,12 @@ api.getUserInfo()
 
     editButton.addEventListener('click', () => {
         validEdit.updateErrorsAndButtonState(editForm);
+        
+        const userData = user.getUserInfo();
 
-        nameInput.value = user.getUserInfo().name;
-        jobInput.value = user.getUserInfo().about;
-    
+        nameInput.value = userData.name;
+        jobInput.value = userData.about;
+
         nameInput.dispatchEvent(new Event('input'));
         jobInput.dispatchEvent(new Event('input'));
     
@@ -115,15 +129,8 @@ api.getUserInfo()
     .then((cards) => {
         const cardsList = new Section({
             items: cards,
-            renderer: (item) => {
-                const card = new Card(item, 
-                    handleCardClick, {
-                    handleLikeClick: () => handleLikeClick(card, item),
-                    handleCardDelete: () => handleCardDelete(card) }, 
-                    currentUserId, 
-                    picturesTemplateSelector);
-                const cardElement = card.generateCard();
-                cardsList.addItem(cardElement);
+            renderer: (item) => { 
+                newCardMaker(item, currentUserId, cardsList);
             },
         }, '.pictures__list')
         
@@ -134,23 +141,16 @@ api.getUserInfo()
             handleFormSubmit: (item) => {
                 renderLoading(true);
                 api.createCard(item)
-                .then((data) => {
-                    const userCard = new Card(data, 
-                        handleCardClick, { 
-                        handleLikeClick: () => handleLikeClick(userCard, data), 
-                        handleCardDelete: () => handleCardDelete(userCard) }, 
-                        currentUserId, 
-                        picturesTemplateSelector);
-                    const cardElement = userCard.generateCard();
-                    cardsList.addItem(cardElement);
+                .then((data) => { 
+                    newCardMaker(data, currentUserId, cardsList);
                     popupTypeAdd.close();
                 })
                 .catch((err) => {
-                    console.log(`${err}`)
+                    console.log(`${err}`);
                 })
                 .finally(() => {
                     renderLoading(false);
-                });
+                })
             }
         });
         
@@ -175,7 +175,7 @@ api.getUserInfo()
                 })
                 .finally(() => {
                     renderLoading(false);
-                });
+                })
             }
         });
         
@@ -187,9 +187,9 @@ api.getUserInfo()
         });
     })
     .catch((err) => {
-        console.log(`${err}`)
+        console.log(`${err}`);
     });
 })
 .catch((err) => {
-    console.log(`${err}`)
+    console.log(`${err}`);
 });

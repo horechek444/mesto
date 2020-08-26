@@ -45,7 +45,7 @@ constructor(data, handleCardClick, { handleLikeClick, handleCardDelete }, curren
     }
 
     setLike(data) {
-        this._isLiked = data.likes.filter((item) => { return item._id == this._currentId; }).length > 0;
+        this._isLiked = data.likes.filter((item) => { return item._id == this._currentId; }).length > 0; // проверяем что лайк есть и он мой
         this._element.querySelector('.pictures__like-counter').textContent = data.likes.length;
         if (this._isLiked) {
             this._element.querySelector('.pictures__like').classList.add('pictures__like_active');
