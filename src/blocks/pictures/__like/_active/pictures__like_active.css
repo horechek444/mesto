@@ -5,4 +5,5 @@
     min-height: 18.1px;
     border: none;
     transition: opacity 0.3s ease-in;
+    background-position: 50% 0;
 }
