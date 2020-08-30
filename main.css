@@ -26,8 +26,8 @@
 .pictures__image{max-width:100%;width:100%;min-height:282px;height:100%;display:block;-o-object-fit:cover;object-fit:cover}
 .pictures__cover{position:relative;display:flex;justify-content:space-between;align-items:center;padding:25px 21px}
 .pictures__title{font-weight:900;font-size:24px;line-height:1.21;margin:0;padding:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pictures__like{background-image:url(ecde066c7557dfdc9d43375f291fba80.svg);background-repeat:no-repeat;min-width:20.7px;min-height:18.1px;border:none;background-color:#fff;transition:opacity .3s ease-in}
-.pictures__like_active{background-image:url(75438e944a43e4c0b404a3fd95e002f1.svg);background-repeat:no-repeat;min-width:20.7px;min-height:18.1px;border:none;transition:opacity .3s ease-in}
+.pictures__like{background-image:url(ecde066c7557dfdc9d43375f291fba80.svg);background-repeat:no-repeat;min-width:20.7px;min-height:18.1px;border:none;background-color:#fff;transition:opacity .3s ease-in;background-position:50% 0}
+.pictures__like_active{background-image:url(75438e944a43e4c0b404a3fd95e002f1.svg);background-repeat:no-repeat;min-width:20.7px;min-height:18.1px;border:none;transition:opacity .3s ease-in;background-position:50% 0}
 .pictures__delete{display:none;position:absolute;top:18px;right:15px;background-image:url(a274c87c0f6b553b47ad3aa5ed58a113.svg);background-color:transparent;background-repeat:no-repeat;background-position:50%;border:none;width:18px;height:19.3px;transition:opacity .3s ease-in}
 .pictures__like-cover{position:relative;top:-4px;right:0;min-height:37px;display:flex;flex-direction:column;justify-content:space-between;align-items:center}
 .pictures__like-counter{font-weight:400;font-size:13px;line-height:1.23}
