@@ -13,6 +13,8 @@ function handleCardClick() {
     popupTypePicture.open();
 }
 
+let currentUserId = null;
+
 function handleLikeClick(card, data) {
     const promise = card.isLiked() ? api.dislikeCard(data._id) : api.likeCard(data._id);
     promise
@@ -84,18 +86,13 @@ const api = new Api({
     }
 })
 
-api.getUserInfo()
-.then((result) => {
-    const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
-    user.setUserInfo(result);
-    avatarImg.style.backgroundImage = `url(${result.avatar})`;
-    const currentUserId = result._id;
+const user = new UserInfo({ userNameElement: userName, userInfoElement: userAbout });
 
-    const popupTypeEdit = new PopupWIthForm({
-        popupSelector: '.popup_type_edit',
-        handleFormSubmit: (item) => {
-            renderLoading(true);
-            api.setUserInfo(item)
+const popupTypeEdit = new PopupWIthForm({
+    popupSelector: '.popup_type_edit',
+    handleFormSubmit: (item) => {
+        renderLoading(true);
+        api.setUserInfo(item)
             .then((data) => {
                 user.setUserInfo(data);
                 popupTypeEdit.close();
@@ -106,90 +103,89 @@ api.getUserInfo()
             .finally(() => {
                 renderLoading(false);
             })
-        }
-    });
-    
-    popupTypeEdit.setEventListeners();
+    }
+});
+popupTypeEdit.setEventListeners();
 
-    editButton.addEventListener('click', () => {
-        validEdit.updateErrorsAndButtonState(editForm);
-        
-        const userData = user.getUserInfo();
+editButton.addEventListener('click', () => {
+    validEdit.updateErrorsAndButtonState(editForm);
 
-        nameInput.value = userData.name;
-        jobInput.value = userData.about;
+    const userData = user.getUserInfo();
 
-        nameInput.dispatchEvent(new Event('input'));
-        jobInput.dispatchEvent(new Event('input'));
-    
-        popupTypeEdit.open(); 
-    });
+    nameInput.value = userData.name;
+    jobInput.value = userData.about;
 
-    api.getCards()
-    .then((cards) => {
-        const cardsList = new Section({
-            items: cards,
-            renderer: (item) => { 
-                newCardMaker(item, currentUserId, cardsList);
-            },
-        }, '.pictures__list')
-        
-        cardsList.renderItems();
-    
-        const popupTypeAdd = new PopupWIthForm({
-            popupSelector: '.popup_type_add',
-            handleFormSubmit: (item) => {
-                renderLoading(true);
-                api.createCard(item)
-                .then((data) => { 
-                    newCardMaker(data, currentUserId, cardsList);
-                    popupTypeAdd.close();
-                })
-                .catch((err) => {
-                    console.log(`${err}`);
-                })
-                .finally(() => {
-                    renderLoading(false);
-                })
-            }
-        });
-        
-        popupTypeAdd.setEventListeners();
-        
-        addButton.addEventListener('click', () => {
-            validAdd.updateErrorsAndButtonState(addForm);
-            popupTypeAdd.open();
-        });
+    nameInput.dispatchEvent(new Event('input'));
+    jobInput.dispatchEvent(new Event('input'));
 
-        const popupTypeAvatar = new PopupWIthForm({
-            popupSelector: '.popup_type_avatar',
-            handleFormSubmit: (item) => {
-                renderLoading(true);
-                api.setAvatar(item)
-                .then((data) => {
-                    avatarImg.style.backgroundImage = `url(${data.avatar})`;
-                    popupTypeAvatar.close();
-                })
-                .catch((err) => {
-                    console.log(`${err}`)
-                })
-                .finally(() => {
-                    renderLoading(false);
-                })
-            }
-        });
-        
-        popupTypeAvatar.setEventListeners();
-        
-        avatarImg.addEventListener('click', () => {
-            validAvatar.updateErrorsAndButtonState(avatarForm);
-            popupTypeAvatar.open();
-        });
+    popupTypeEdit.open();
+});
+
+const cardsList = new Section({
+    renderer: (item) => {
+        newCardMaker(item, currentUserId, cardsList);
+    },
+}, '.pictures__list');
+
+
+const popupTypeAdd = new PopupWIthForm({
+    popupSelector: '.popup_type_add',
+    handleFormSubmit: (item) => {
+        renderLoading(true);
+        api.createCard(item)
+            .then((data) => {
+                newCardMaker(data, currentUserId, cardsList);
+                popupTypeAdd.close();
+            })
+            .catch((err) => {
+                console.log(`${err}`);
+            })
+            .finally(() => {
+                renderLoading(false);
+            })
+    }
+});
+
+popupTypeAdd.setEventListeners();
+
+addButton.addEventListener('click', () => {
+    validAdd.updateErrorsAndButtonState(addForm);
+    popupTypeAdd.open();
+});
+
+const popupTypeAvatar = new PopupWIthForm({
+    popupSelector: '.popup_type_avatar',
+    handleFormSubmit: (item) => {
+        renderLoading(true);
+        api.setAvatar(item)
+            .then((data) => {
+                avatarImg.style.backgroundImage = `url(${data.avatar})`;
+                popupTypeAvatar.close();
+            })
+            .catch((err) => {
+                console.log(`${err}`)
+            })
+            .finally(() => {
+                renderLoading(false);
+            })
+    }
+});
+
+popupTypeAvatar.setEventListeners();
+
+avatarImg.addEventListener('click', () => {
+    validAvatar.updateErrorsAndButtonState(avatarForm);
+    popupTypeAvatar.open();
+});
+
+Promise.all([api.getCards(), api.getUserInfo()])
+    .then(([cards, userData]) => {
+        user.setUserInfo(userData);
+        avatarImg.style.backgroundImage = `url(${userData.avatar})`;
+        currentUserId = userData._id;
+
+        cardsList.renderItems(cards);
     })
     .catch((err) => {
         console.log(`${err}`);
     });
-})
-.catch((err) => {
-    console.log(`${err}`);
-});
